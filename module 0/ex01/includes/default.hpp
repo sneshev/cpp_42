@@ -1,0 +1,15 @@
+#ifndef DEFAULT_HPP
+#define DEFAULT_HPP
+
+#include <iostream>
+#include <algorithm> 
+#define str std::string
+
+
+void printnl();
+void printnl(str message);
+void print(str message);
+void print(int nb);
+
+
+#endif
