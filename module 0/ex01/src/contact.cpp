@@ -7,7 +7,7 @@
 		void setDarkestSecret(const str &inSecret);
 */
 
-#include "../includes/contact.hpp"
+#include "../includes/Contact.hpp"
 
 Contact::Contact() {}
 

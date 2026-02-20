@@ -9,7 +9,8 @@ INC_DIR = includes
 SRC = $(SRC_DIR)/main.cpp \
       $(SRC_DIR)/phonebook.cpp \
       $(SRC_DIR)/contact.cpp \
-      $(SRC_DIR)/default.cpp
+      $(SRC_DIR)/default.cpp \
+      $(SRC_DIR)/utils.cpp 
 
 OBJ = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC))
 

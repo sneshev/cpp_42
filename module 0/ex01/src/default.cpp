@@ -1,4 +1,4 @@
-#include "../includes/default.hpp"
+#include "../includes/header.hpp"
 
 void print(str message) {
 	std::cout << message;
