@@ -1,4 +1,4 @@
-NAME = HI_THIS_IS_BRAIN
+NAME = Unnecessary_violence
 COM = c++
 FLAGS = -Wall -Wextra -Werror 
 
