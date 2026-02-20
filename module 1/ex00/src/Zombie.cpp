@@ -1,11 +1,11 @@
 #include "../includes/Zombie.hpp"
 
 Zombie::Zombie(void) : _name("zombie") {
-	std::cout << GREEN << _name << " has been created" << "\033[0m" << std::endl;
+	std::cout << GREEN << _name << " has been created" << RESET << std::endl;
 }
 
 Zombie::Zombie(str inName) : _name(inName){
-	std::cout << GREEN << _name << " has been created" << "\033[0m" << std::endl;
+	std::cout << GREEN << _name << " has been created" << RESET << std::endl;
 }
 
 void Zombie::setName(const str &inName) {
@@ -13,7 +13,7 @@ void Zombie::setName(const str &inName) {
 }
 
 Zombie::~Zombie() {
-	std::cout << RED << _name << " has been destroyed" << "\033[0m" << std::endl;
+	std::cout << RED << _name << " has been destroyed" << RESET << std::endl;
 }
 
 str Zombie::getName() {
