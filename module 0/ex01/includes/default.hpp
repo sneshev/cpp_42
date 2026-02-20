@@ -10,6 +10,7 @@ void printnl();
 void printnl(str message);
 void print(str message);
 void print(int nb);
+void print(char c);
 
 
 #endif

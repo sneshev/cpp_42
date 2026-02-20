@@ -25,19 +25,23 @@ void PhoneBook::addContact(Contact inContact) {
 }
 
 
-
-static void display_contact(int i, str a, str b, str c, str d) {
-	print(i);
-	print(" | ");
-	print(a);
-	print(" | ");
-	print(b);
-	print(" | ");
-	print(c);
-	print(" | ");
-	print(d);
-	printnl();
-} 
+void print_attribute(str a) {
+	int len = a.length();
+	if (len < 10) {
+		for (int i = 0; i < 10 - len; i++)
+			print(" ");
+	}
+	for (int i = 0; i < len; i ++) {
+		if (len > 10 && i == 9) {
+			print(".");
+			break ;
+		}
+		if (a[i] < 7 || a[i] > 13)
+			print(a[i]);
+		else
+			print(" ");
+	}
+}
 
 /*	Display the saved contacts as a list of 4 columns: index, first name, last
 	name and nickname.
@@ -54,13 +58,16 @@ void PhoneBook::displayContacts() const {
 
 	for (int i = 0; i < _count && i < MAXCOUNT; i++) {
 		Contact c = getContact(i);
-		display_contact(
-			i + 1,
-			c.getFirstName(),
-			c.getLirstName(),
-			c.getNickname(),
-			c.getPhoneNumber()
-		);
+		print(i + 1);
+		print("|");
+		print_attribute(c.getFirstName());
+		print("|");
+		print_attribute(c.getLirstName());
+		print("|");
+		print_attribute(c.getNickname());
+		print("|");
+		print_attribute(c.getPhoneNumber());
+		printnl();
 	}
 	printnl();
 	
