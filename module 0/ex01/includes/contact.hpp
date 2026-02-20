@@ -20,7 +20,7 @@ class Contact {
 		void setSecret(const str &inSecret);
 
 		str getFirstName();
-		str getLirstName();
+		str getLastName();
 		str getNickname();
 		str getPhoneNumber();
 		str getSecret();

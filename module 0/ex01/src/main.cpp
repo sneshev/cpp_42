@@ -1,13 +1,15 @@
 #include "../includes/phonebook.hpp"
 
+//errors
 #define STREMPTY "This field can not be empty. Try again: "
 #define NOCONTACTS "There are no contacts yet.\n"
 #define WRONGCOMM "Not a valid command. \nValid commands are: ADD, SEARCH, EXIT"
 #define WRONG "no🙅🚫"
 
-
+//macros
 #define PROMPT_CMD "Please write a command from the list: ADD, SEARCH, EXIT 😊\n"
 #define CONTACTADDEDD "Contact Added!\n"
+#define SELECT_INDEX "Please select contact to view: "
 
 
 void print_welcome() {
@@ -58,10 +60,16 @@ void do_search(PhoneBook &phoneBook) {
 	{
 		if (phoneBook.getCount() >= 1) {
 			phoneBook.displayContacts();
-			do {
-				// select contact
-
-			} while (0);
+			int index = -1;
+			while (1) {
+				str input = get_num_input(SELECT_INDEX);
+				index = std::stoi(input);
+				if (index < 1 || index > MAXCOUNT || index > phoneBook.getCount())
+					printnl(WRONG);
+				else
+					break ;
+			};
+			phoneBook.showContact(index - 1);
 		}
 		else
 			printnl(NOCONTACTS);

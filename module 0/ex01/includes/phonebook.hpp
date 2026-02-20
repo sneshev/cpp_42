@@ -11,6 +11,7 @@ class PhoneBook {
 	public:
 		PhoneBook();
 		const Contact&	getContact(int index) const;
+		void			showContact(int index) const;
 		void			addContact(Contact contact);
 	    int				getCount() const;
 		void			displayContacts() const;

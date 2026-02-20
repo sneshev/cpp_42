@@ -15,6 +15,17 @@ const Contact&	PhoneBook::getContact(int index) const {
 	return (_contacts[index]);
 }
 
+void PhoneBook::showContact(int index) const {
+	Contact c = getContact(index);
+	print("First Name: ");		printnl(c.getFirstName());
+	print("Last Name: ");		printnl(c.getLastName());
+	print("Nickname: ");		printnl(c.getNickname());
+	print("Phone number: ");	printnl(c.getPhoneNumber());
+	print("Darkest secret: ");	printnl(c.getSecret());
+
+	printnl();
+}
+
 void PhoneBook::addContact(Contact inContact) {
 	int index = _count % 8;
 	_count++;
@@ -25,7 +36,7 @@ void PhoneBook::addContact(Contact inContact) {
 }
 
 
-void print_attribute(str a) {
+static void print_attribute(str a) {
 	int len = a.length();
 	if (len < 10) {
 		for (int i = 0; i < 10 - len; i++)
@@ -58,15 +69,17 @@ void PhoneBook::displayContacts() const {
 
 	for (int i = 0; i < _count && i < MAXCOUNT; i++) {
 		Contact c = getContact(i);
+		print("|");
 		print(i + 1);
 		print("|");
 		print_attribute(c.getFirstName());
 		print("|");
-		print_attribute(c.getLirstName());
+		print_attribute(c.getLastName());
 		print("|");
 		print_attribute(c.getNickname());
 		print("|");
 		print_attribute(c.getPhoneNumber());
+		print("|");
 		printnl();
 	}
 	printnl();
