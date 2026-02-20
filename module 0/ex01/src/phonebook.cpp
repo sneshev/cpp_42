@@ -22,8 +22,6 @@ void PhoneBook::showContact(int index) const {
 	print("Nickname: ");		printnl(c.getNickname());
 	print("Phone number: ");	printnl(c.getPhoneNumber());
 	print("Darkest secret: ");	printnl(c.getSecret());
-
-	printnl();
 }
 
 void PhoneBook::addContact(Contact inContact) {
@@ -78,8 +76,6 @@ void PhoneBook::displayContacts() const {
 		print_attribute(c.getLastName());
 		print("|");
 		print_attribute(c.getNickname());
-		print("|");
-		print_attribute(c.getPhoneNumber());
 		print("|");
 		printnl();
 	}

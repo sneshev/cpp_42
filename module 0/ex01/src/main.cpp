@@ -7,13 +7,15 @@
 #define WRONG "no🙅🚫"
 
 //macros
+#define WELCOME "\033[2J\033[H	Welcome To Phonebook!\n"
 #define PROMPT_CMD "Please write a command from the list: ADD, SEARCH, EXIT 😊\n"
 #define CONTACTADDEDD "Contact Added!\n"
 #define SELECT_INDEX "Please select contact to view: "
 
-
+#include <cstdlib>
 void print_welcome() {
-	printnl("welcome 2 phonebok\n");
+	std::system("clear");
+	printnl(WELCOME);
 }
 
 void print_goodbye() {
@@ -64,6 +66,7 @@ void do_add(PhoneBook &phoneBook) {
 	printnl(CONTACTADDEDD);
 }
 
+
 void do_search(PhoneBook &phoneBook) {
 	{
 		if (phoneBook.getCount() >= 1) {
@@ -77,7 +80,15 @@ void do_search(PhoneBook &phoneBook) {
 				else
 					break ;
 			};
+			printnl();
+			printnl();
+			print("Information about contact ");
+			print(index);
+			printnl(":");
+			printnl();
 			phoneBook.showContact(index - 1);
+			sleep(1);
+			printnl();
 		}
 		else
 			printnl(NOCONTACTS);
