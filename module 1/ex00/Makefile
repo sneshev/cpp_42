@@ -1,12 +1,15 @@
-NAME = 
+NAME = BraiiiiiiinnnzzzZ
 COM = c++
-FLAGS = -Wall -Wextra -Werror -std=c++11
+FLAGS = -Wall -Wextra -Werror 
 
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = includes
 
-SRC = $(SRC_DIR)/main.cpp \
+SRC =	$(SRC_DIR)/main.cpp \
+		$(SRC_DIR)/Zombie.cpp \
+		$(SRC_DIR)/newZombie.cpp \
+		$(SRC_DIR)/randomChump.cpp \
 
 OBJ = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC))
 
