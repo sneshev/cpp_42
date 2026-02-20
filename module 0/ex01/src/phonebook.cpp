@@ -35,6 +35,7 @@ void PhoneBook::addContact(Contact inContact) {
 	_contacts[index] = inContact;
 }
 
+bool is_space(char c);
 
 static void print_attribute(str a) {
 	int len = a.length();
@@ -47,7 +48,7 @@ static void print_attribute(str a) {
 			print(".");
 			break ;
 		}
-		if (a[i] < 7 || a[i] > 13)
+		if (!is_space(a[i]))
 			print(a[i]);
 		else
 			print(" ");

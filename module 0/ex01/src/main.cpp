@@ -20,6 +20,12 @@ void print_goodbye() {
 	printnl("bye\n");
 }
 
+bool is_space(char c) {
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (true);
+	return (false);
+}
+
 str get_input(str prompt) {
 	str	input;
 	print(prompt);
@@ -28,7 +34,9 @@ str get_input(str prompt) {
 			std::cin.clear();
 			continue;
 		}
-		if (input.empty())
+		else if (input.empty())
+			printnl(STREMPTY);
+		else if (std::all_of(input.begin(), input.end(), ::is_space))
 			printnl(STREMPTY);
 		else
 			break ;
