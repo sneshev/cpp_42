@@ -28,6 +28,20 @@ bool is_space(char c) {
 	return (false);
 }
 
+bool is_digit(char c) {
+	if (c >= '0' && c <= '9')
+		return (true);
+	return (false);
+}
+
+bool all_of(str s, bool (*f)(char)) {
+	for (size_t i = 0; i < s.length(); i++ ) {
+		if (!f(s[i]))
+			return (false);
+	}
+	return (true);
+}
+
 str get_input(str prompt) {
 	str	input;
 	print(prompt);
@@ -38,7 +52,7 @@ str get_input(str prompt) {
 		}
 		else if (input.empty())
 			printnl(STREMPTY);
-		else if (std::all_of(input.begin(), input.end(), ::is_space))
+		else if (all_of(input, is_space))
 			printnl(STREMPTY);
 		else
 			break ;
@@ -48,7 +62,7 @@ str get_input(str prompt) {
 
 str get_num_input(str prompt) {
 	str input = get_input(prompt);
-	while(!std::all_of(input.begin(), input.end(), ::isdigit)) {
+	while(!all_of(input, is_digit)) {
 		printnl(WRONG);
 		input = get_input(prompt);
 	}
