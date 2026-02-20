@@ -58,6 +58,8 @@ str get_input(str prompt) {
 	print(prompt);
 	while (1) {
 		if (getline(std::cin, input).fail()) {
+			if (std::cin.eof())
+				exit(0);
 			std::cin.clear();
 			continue;
 		}
