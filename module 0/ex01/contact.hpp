@@ -6,12 +6,12 @@
 
 class Contact {
 	private:
-		int	index;
-		str	first_name;
-		str	last_name;
-		str	nickname;
-		str	phone_nbr;
-		str	darkest_secret;
+		// int	_index;
+		// str	_first_name;
+		// str	_last_name;
+		// str	_nickname;
+		// str	_phone_nbr;
+		// str	_darkest_secret;
 
 	public:
 		

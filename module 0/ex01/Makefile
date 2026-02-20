@@ -1,7 +1,7 @@
 NAME = phonebook
 COM = c++
 FLAGS = -Wall -Wextra -Werror
-SRC = main.cpp
+SRC = main.cpp phonebook.cpp
  
 OBJ = $(SRC:.cpp=.o)
 OBJ_DIR = obj/
