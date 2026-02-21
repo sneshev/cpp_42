@@ -8,6 +8,29 @@
 	Of course, handle unexpected inputs and errors. You must create and turn in your
 	own tests to ensure that your program works as expected.
 */
-int main(int argc, char *argv[]) {
+#include <iostream>
+#define str std::string
+#define BADARGC "Argument count must be 3 (file and 2 strings)"
 
+
+
+bool error(str message) {
+	std::cout << message << std::endl;
+	return (false);
+}
+
+bool is_valid_input(int argc, char *argv[], int *fd) {
+	(void)argv;
+	(void)fd;
+	if (argc != 4) {
+		return error(BADARGC);
+	}
+	return (true);
+}
+
+
+int main(int argc, char *argv[]) {
+	int fd;
+	if (!is_valid_input(argc, argv, &fd))
+		return (1);
 }
