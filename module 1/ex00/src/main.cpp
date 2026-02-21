@@ -2,18 +2,13 @@
 
 
 Zombie* newZombie( std::string inName );
+void randomChump( std::string name );
 
 
 int main() {
-	Zombie zombie;
-	Zombie zombie2;
-	Zombie zombie3("jiji");
-	zombie.setName("jonny");
-	zombie.announce();
-	zombie2.announce();
-	zombie3.announce();
+	randomChump("kitty");
 
-	Zombie *zombie4 = newZombie("alona");
-	zombie4->announce();
-	delete zombie4;
+	Zombie *zombie = newZombie("alona");
+	zombie->announce();
+	delete zombie;
 }
