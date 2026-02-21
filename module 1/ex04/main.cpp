@@ -33,7 +33,6 @@ bool is_valid_input(int argc, char *argv[]) {
 	return (true);
 }
 
-
 str replace_all(str &c, str s1, str s2) {
 	size_t	n = 0;
 
@@ -62,11 +61,10 @@ int main(int argc, char *argv[]) {
 		error(FILECREATE);
 		return (1);
 	}
-	std::string content( 
-		(std::istreambuf_iterator<char>(inFile)),
-		std::istreambuf_iterator<char>()
-	);
-    content = replace_all(content, argv[2], argv[3]);
-    outFile << content;
+	auto stream = (std::istreambuf_iterator<char>(inFile));
+	auto end_of_stream = std::istreambuf_iterator<char>();
+	std::string content(stream, end_of_stream);
+
+    outFile << replace_all(content, argv[2], argv[3]);
     return 0;
 }
