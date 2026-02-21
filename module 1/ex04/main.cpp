@@ -35,7 +35,17 @@ bool is_valid_input(int argc, char *argv[]) {
 
 
 str replace_all(str &c, str s1, str s2) {
-	
+	size_t	n = 0;
+
+	n = c.find(s1, n);
+	while (n != std::string::npos)
+	{
+		c.erase(n, s1.length());
+		c.insert(n, s2);
+		n += s2.length();
+		n = c.find(s1, n);
+	}
+	return (c);
 }
 
 int main(int argc, char *argv[]) {
@@ -59,5 +69,4 @@ int main(int argc, char *argv[]) {
     content = replace_all(content, argv[2], argv[3]);
     outFile << content;
     return 0;
-
 }
