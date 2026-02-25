@@ -52,14 +52,12 @@ bool Fixed::operator !=	(const Fixed &other) const	{ return _value != other.getR
 Fixed Fixed::operator +	(const Fixed &other) const {
 	Fixed f;
 	long rawtotal = (long)_value + other.getRawBits();
-	f.setRawBits(rawtotal >> _fractionalBitAmount);
 	return (f);
 }
 
 Fixed Fixed::operator -	(const Fixed &other) const {
 	Fixed f;
 	long rawtotal = (long)_value - other.getRawBits();
-	f.setRawBits(rawtotal >> _fractionalBitAmount);
 	return (f);
 }
 
