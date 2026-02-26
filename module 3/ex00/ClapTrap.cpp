@@ -6,14 +6,14 @@
 ClapTrap::ClapTrap(const std::string inName)
 	: _name(inName)
 	{
-	std::cout << GREEN << "Default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "ClapTrap Default constructor called" << RESET << std::endl;
 	_hitPoints = 10;
 	_energyPoints = 10;
 	_attackDamage = 0;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
-	std::cout << BLUE << "Copy assignment operator called" << RESET << std::endl;
+	std::cout << BLUE << "ClapTrap Copy assignment operator called" << RESET << std::endl;
 	if (this != &other) {
 		_name = other._name;
 		_hitPoints = other._hitPoints;
@@ -25,12 +25,12 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
 
 ClapTrap::ClapTrap(const ClapTrap& other)
 {
-	std::cout << BLUE << "Copy constructor called" << RESET << std::endl;
+	std::cout << BLUE << "ClapTrap Copy constructor called" << RESET << std::endl;
 	*this = other;
 }
 
 ClapTrap::~ClapTrap() {
-	std::cout << RED << "Destructor called" << RESET << std::endl;
+	std::cout << RED << "ClapTrap Destructor called" << RESET << std::endl;
 }
 
 
@@ -66,5 +66,5 @@ int ClapTrap::useEnergy() {
 }
 
 void ClapTrap::printClapTrap() {
-	std::cout << COLOR << "ClapTrap " << _name << "( " << _hitPoints << " hp, " << _energyPoints << "ep, " << _attackDamage << "dmg)" << RESET << std::endl;
+	std::cout << COLOR << "ClapTrap " << _name << " (" << _hitPoints << " hp, " << _energyPoints << "ep, " << _attackDamage << "dmg)" << RESET << std::endl;
 }

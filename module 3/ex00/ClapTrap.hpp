@@ -12,9 +12,6 @@
 #define COLOR "\033[30m"
 
 
-
-
-
 class ClapTrap {
 	private:
 		std::string	_name;
@@ -35,10 +32,6 @@ class ClapTrap {
 		void	beRepaired(unsigned int amount);
 		void	printClapTrap();
 };
-
-
-
-
 
 
 
