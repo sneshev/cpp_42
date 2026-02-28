@@ -1,4 +1,5 @@
 #include "../inc/Cat.hpp"
+#include "../inc/WrongCat.hpp"
 #include "../inc/Dog.hpp"
 
 int main()
@@ -11,9 +12,12 @@ int main()
 	i->makeSound(); //will output the cat sound!
 	j->makeSound();
 	meta->makeSound();
-	// ...
+
 	delete meta;
 	delete i;
 	delete j;
-	return 0;
+	// const WrongAnimal	*wrcat = new WrongCat();
+	// wrcat->makeSound();
+	// delete wrcat;
+	// return 0;
 }

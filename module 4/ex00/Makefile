@@ -8,7 +8,9 @@ INC_DIR = includes
 
 SRC =	src/main.cpp \
 		src/Animal.cpp \
+		src/WrongAnimal.cpp \
 		src/Cat.cpp \
+		src/WrongCat.cpp \
 		src/Dog.cpp \
 
 OBJ = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC))
