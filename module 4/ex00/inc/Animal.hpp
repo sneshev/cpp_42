@@ -11,6 +11,7 @@
 class Animal {
 	protected:
 		std::string _type;
+		Animal(std::string inType);
 	
 	public:
 		Animal();

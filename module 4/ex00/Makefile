@@ -1,4 +1,4 @@
-NAME = scavtrap
+NAME = animals
 COM = c++
 FLAGS = -Wall -Wextra -Werror 
 

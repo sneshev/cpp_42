@@ -4,6 +4,9 @@ Animal::Animal() {
 	std::cout << GREEN << "Animal Default constructor called" << RESET << std::endl;
 }
 
+Animal::Animal(std::string inType) : _type(inType){
+	std::cout << GREEN << "Animal Default constructor called" << RESET << std::endl;
+}
 Animal::Animal(const Animal& other) {
 	std::cout << BLUE << "Animal Copy constructor called" << RESET << std::endl;
 	*this = other;
@@ -26,5 +29,5 @@ std::string Animal::getType() const {
 }
 
 void Animal::makeSound() const {
-	std::cout << _type << ": *Animal sounds*" << std::endl;
+	std::cout << "Animal: *Animal sounds*" << std::endl;
 }
