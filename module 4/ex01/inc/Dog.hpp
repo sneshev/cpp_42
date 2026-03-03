@@ -14,8 +14,12 @@ class Dog : public Animal {
 	~Dog();
 
 	void	makeSound() const override;
-};
 
+	std::string	getIdea(unsigned int index);
+	int			setIdea(unsigned int index, const std::string inIdea);
+
+	
+};
 
 
 #endif

@@ -20,3 +20,19 @@ Brain& Brain::operator=(const Brain& other) {
 Brain::~Brain() {
 	std::cout << RED << "Brain Destructor called" << RESET << std::endl;
 }
+
+int Brain::setIdea(unsigned int index, const std::string inIdea) {
+	if (index < MAXTHOUGHTS) {
+		_ideas[index] = inIdea;
+		return (1);
+	}
+	return (-1);
+
+}
+
+std::string Brain::getIdea(unsigned int index) {
+	if (index < MAXTHOUGHTS) {
+		return (_ideas[index]);
+	}
+	return ("");
+}

@@ -21,6 +21,9 @@ class Brain {
 		~Brain();
 		
 		Brain& operator=(const Brain& other);
+
+		std::string	getIdea(unsigned int index);
+		int			setIdea(unsigned int index, const std::string inIdea);
 };
 
 

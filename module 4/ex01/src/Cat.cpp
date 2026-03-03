@@ -29,3 +29,11 @@ Cat::~Cat() {
 void Cat::makeSound() const {
 	std::cout << _type << ": meow meow" << std::endl;
 }
+
+int Cat::setIdea(unsigned int index, const std::string inIdea) {
+	return (_brain->setIdea(index, inIdea));
+}
+
+std::string Cat::getIdea(unsigned int index) {
+	return (_brain->getIdea(index));
+}
