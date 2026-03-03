@@ -1,17 +1,38 @@
 #include "../inc/Cat.hpp"
 #include "../inc/Dog.hpp"
 
+#define ANIMALCOUNT 10
+
 int main()
 {
-	Animal* a = new Animal();
-	Animal* d = new Dog();
-	Animal* c = new Cat();
-	a->makeSound();
-	c->makeSound();
-	d->makeSound();
-	delete a;
-	delete c;
-	delete d;
+	Animal* animals[ANIMALCOUNT];
+
+	for (int i = 0; i < ANIMALCOUNT; i++) {
+		if (i % 2) {
+			animals[i] = new Cat();
+		} else {
+			animals[i] = new Dog();
+		}
+	}
+	for (int i = 0; i < ANIMALCOUNT; i++) {
+		animals[i]->makeSound();
+	}
+	for (int i = 0; i < ANIMALCOUNT; i++) {
+		delete animals[i];
+	}
+
+	
+	// Animal* a = new Animal();
+	// Animal* d = new Dog();
+	// Animal* c = new Cat();
+	// a->makeSound();
+	// c->makeSound();
+	// d->makeSound();
+	// delete a;
+	// delete c;
+	// delete d;
+
+
 
 
 	// Dog *d1 = new Dog();
