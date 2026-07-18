@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Form.hpp"
 #include <exception>
 #include <iostream>
 
@@ -9,23 +8,28 @@
 #define BLUE "\033[34m"
 #define RESET "\033[0m"
 
-class Bureaucrat {
+class Bureaucrat;
+
+class Form {
 	private:
 		const std::string _name;
-		int _grade;
+		const int _gradeToSign;
+		const int _gradeToExecute;
+		bool _isSigned;
 
 	public:
-		Bureaucrat(const std::string& inName, int inGrade);
-		Bureaucrat(const Bureaucrat& other);
-		Bureaucrat& operator=(const Bureaucrat& other);
-		~Bureaucrat();
-
-		void signForm(Form& f);
-
+		Form(const std::string& inName, int inGradeToSign, int inGradeToExecute);
+		Form(const Form& other);
+		Form& operator=(const Form& other);
+		~Form();
+		
+		void beSigned(const Bureaucrat& b);
+		
 		const std::string& getName() const;
-		int getGrade() const;
-		void incrementGrade();
-		void decrementGrade();
+		int getGradeToSign() const;
+		int getGradeToExecute() const;
+		bool getSignedStatus() const;
+
 
 		class GradeTooHighException : public std::exception {
 			public:
@@ -38,4 +42,5 @@ class Bureaucrat {
 		};
 };
 
-std::ostream& operator<<(std::ostream& s, const Bureaucrat& b);
+std::ostream& operator<<(std::ostream& s, const Form& f);
+

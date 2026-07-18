@@ -34,6 +34,18 @@ Bureaucrat::~Bureaucrat() {
 	std::cout << RED << "Bureaucrat Destructor called" << RESET << std::endl;
 }
 
+
+void Bureaucrat::signForm(Form& f) {
+	try {
+		f.beSigned(*this);
+		std::cout << _name << " signed " << f.getName() << std::endl;
+	} catch (std::exception& e) {
+		std::cout << _name << " couldn’t sign " << f.getName() << " because " << e.what() << std::endl;
+	}
+}
+
+
+
 const std::string& Bureaucrat::getName() const {
 	return _name;
 }
@@ -67,6 +79,6 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 }
 
 std::ostream& operator<<(std::ostream& s, const Bureaucrat& b) {
-	s << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
+	s << b.getName() << ", bureaucrat grade " << b.getGrade() << "." << std::endl;
 	return s;
 }
