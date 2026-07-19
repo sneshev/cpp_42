@@ -16,10 +16,10 @@ Form::Form(const std::string& inName, int inGradeToSign, int inGradeToExecute)
 Form::Form(const Form& other)
 	: _name(other._name),
 	_gradeToSign(other._gradeToSign),
-	_gradeToExecute(other._gradeToExecute)
+	_gradeToExecute(other._gradeToExecute),
+	_isSigned(other._isSigned)
 {
 	std::cout << BLUE << "Form Copy constructor called" << RESET << std::endl;
-	*this = other;
 }
 
 Form& Form::operator=(const Form& other) {

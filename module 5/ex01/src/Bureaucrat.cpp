@@ -34,7 +34,6 @@ Bureaucrat::~Bureaucrat() {
 	std::cout << RED << "Bureaucrat Destructor called" << RESET << std::endl;
 }
 
-
 void Bureaucrat::signForm(Form& f) {
 	try {
 		f.beSigned(*this);
@@ -43,8 +42,6 @@ void Bureaucrat::signForm(Form& f) {
 		std::cout << _name << " couldn’t sign " << f.getName() << " because " << e.what() << std::endl;
 	}
 }
-
-
 
 const std::string& Bureaucrat::getName() const {
 	return _name;
