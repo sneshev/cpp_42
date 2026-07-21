@@ -1,0 +1,26 @@
+#include "../inc/AForm.hpp"
+#include "../inc/ShrubberyCreationForm.hpp"
+#include <fstream>
+#include <stdexcept>
+
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& inTarget)
+	: AForm("ShrubberyCreationForm", 145, 137), _target(inTarget)
+{
+	std::cout << GREEN << "ShrubberyCreationForm Default constructor called" << RESET << std::endl;
+}
+
+ShrubberyCreationForm::~ShrubberyCreationForm()
+{
+	std::cout << RED << "ShrubberyCreationForm Destructor called" << RESET << std::endl;
+}
+
+void ShrubberyCreationForm::doAction() const {
+	std::ofstream file(_target + "_shrubbery");
+	if (!file.is_open()) {
+		throw std::runtime_error("could not create file");
+	}
+	file << "     &&&&\n    &&&&&\n   &&&&&&\n     ||\n     ||\n";
+	file.close();
+}
+
+
