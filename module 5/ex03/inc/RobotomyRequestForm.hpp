@@ -12,7 +12,9 @@ class RobotomyRequestForm : public AForm {
 		void doAction() const override;
 
 	public:
+		RobotomyRequestForm();
 		RobotomyRequestForm(const std::string& inTarget);
+		RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
 		~RobotomyRequestForm();
 
 		static AForm* create(const std::string& target);

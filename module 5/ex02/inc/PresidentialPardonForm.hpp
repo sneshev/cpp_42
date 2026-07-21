@@ -12,6 +12,8 @@ class PresidentialPardonForm : public AForm {
 		void doAction() const override;
 
 	public:
+		PresidentialPardonForm();
 		PresidentialPardonForm(const std::string& inTarget);
+		PresidentialPardonForm& operator=(const PresidentialPardonForm& other);
 		~PresidentialPardonForm();
 };

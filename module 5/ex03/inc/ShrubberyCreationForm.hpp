@@ -12,7 +12,9 @@ class ShrubberyCreationForm : public AForm {
 		void doAction() const override;
 
 	public:
+		ShrubberyCreationForm();
 		ShrubberyCreationForm(const std::string& inTarget);
+		ShrubberyCreationForm& operator=(const ShrubberyCreationForm& other);
 		~ShrubberyCreationForm();
 
 		static AForm* create(const std::string& target);

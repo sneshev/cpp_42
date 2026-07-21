@@ -3,10 +3,16 @@
 #include <cstdlib>
 #include <ctime>
 
+RobotomyRequestForm::RobotomyRequestForm()
+	: AForm("RobotomyRequestForm", 72, 45), _target("target")
+{
+	std::cout << GREEN << "RobotomyRequestForm Default constructor called" << RESET << std::endl;
+}
+
 RobotomyRequestForm::RobotomyRequestForm(const std::string& inTarget)
 	: AForm("RobotomyRequestForm", 72, 45), _target(inTarget)
 {
-	std::cout << GREEN << "RobotomyRequestForm Default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "RobotomyRequestForm constructor called" << RESET << std::endl;
 }
 
 RobotomyRequestForm::~RobotomyRequestForm()
@@ -14,6 +20,13 @@ RobotomyRequestForm::~RobotomyRequestForm()
 	std::cout << RED << "RobotomyRequestForm Destructor called" << RESET << std::endl;
 }
 
+RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other) {
+	std::cout << BLUE << "RobotomyRequestForm Copy assignment operator called" << RESET << std::endl;
+	if (this != &other) {
+		_target = other._target;
+	}
+	return (*this);
+}
 
 void RobotomyRequestForm::doAction() const {
 	static bool seeded = false;
