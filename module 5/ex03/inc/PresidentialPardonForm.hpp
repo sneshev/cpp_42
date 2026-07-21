@@ -14,4 +14,6 @@ class PresidentialPardonForm : public AForm {
 	public:
 		PresidentialPardonForm(const std::string& inTarget);
 		~PresidentialPardonForm();
+
+		static AForm* create(const std::string& target);
 };

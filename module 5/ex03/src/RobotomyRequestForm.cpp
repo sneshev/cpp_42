@@ -29,3 +29,8 @@ void RobotomyRequestForm::doAction() const {
 		std::cout << _target << " robotomy failed" << std::endl;
 	}
 }
+
+
+AForm* RobotomyRequestForm::create(const std::string& target) {
+	return new RobotomyRequestForm(target);
+}

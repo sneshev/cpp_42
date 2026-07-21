@@ -14,4 +14,6 @@ class ShrubberyCreationForm : public AForm {
 	public:
 		ShrubberyCreationForm(const std::string& inTarget);
 		~ShrubberyCreationForm();
+
+		static AForm* create(const std::string& target);
 };

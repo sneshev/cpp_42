@@ -23,4 +23,6 @@ void ShrubberyCreationForm::doAction() const {
 	file.close();
 }
 
-
+AForm* ShrubberyCreationForm::create(const std::string& target) {
+	return new ShrubberyCreationForm(target);
+}

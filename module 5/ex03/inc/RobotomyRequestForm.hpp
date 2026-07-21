@@ -14,4 +14,6 @@ class RobotomyRequestForm : public AForm {
 	public:
 		RobotomyRequestForm(const std::string& inTarget);
 		~RobotomyRequestForm();
+
+		static AForm* create(const std::string& target);
 };
