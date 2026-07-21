@@ -74,6 +74,10 @@ const char* Form::GradeTooLowException::what() const throw() {
 	return ("Grade is too low");
 }
 
+const char* Form::FormAlreadySignedException::what() const throw() {
+	return ("Form already signed");
+}
+
 std::ostream& operator<<(std::ostream& s, const Form& f) {
 	s << "Form \"" << f.getName() << "\"" << std::endl;
 	s << "signed = " << f.getSignedStatus() << std::endl;
