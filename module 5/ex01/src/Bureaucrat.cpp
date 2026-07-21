@@ -6,6 +6,12 @@
 	either a Bureaucrat::GradeTooHighException or a Bureaucrat::GradeTooLowException.
 */
 
+Bureaucrat::Bureaucrat()
+	: _name("joni"), _grade(123)
+{
+	std::cout << GREEN << "Bureaucrat Default constructor called" << RESET << std::endl;
+}
+
 Bureaucrat::Bureaucrat(const std::string& inName, int inGrade)
 	: _name(inName) {
 	if (inGrade < 1)

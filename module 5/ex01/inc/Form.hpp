@@ -18,6 +18,7 @@ class Form {
 		bool _isSigned;
 
 	public:
+		Form();
 		Form(const std::string& inName, int inGradeToSign, int inGradeToExecute);
 		Form(const Form& other);
 		Form& operator=(const Form& other);

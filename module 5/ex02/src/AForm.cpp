@@ -10,7 +10,7 @@ AForm::AForm(const std::string& inName, int inGradeToSign, int inGradeToExecute)
 	if (_gradeToSign > 150 || _gradeToExecute > 150) {
 		throw AForm::GradeTooLowException();
 	}
-	std::cout << GREEN << "AForm Default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "AForm constructor called" << RESET << std::endl;
 }
 
 AForm::AForm(const AForm& other)

@@ -1,6 +1,12 @@
 #include "../inc/Form.hpp"
 #include "../inc/Bureaucrat.hpp"
 
+Form::Form()
+	: _name("form"), _gradeToSign(10), _gradeToExecute(5), _isSigned(false)
+{
+	std::cout << GREEN << "Form Default constructor called" << RESET << std::endl;
+}
+
 Form::Form(const std::string& inName, int inGradeToSign, int inGradeToExecute) 
 	: _name(inName), _gradeToSign(inGradeToSign), _gradeToExecute(inGradeToExecute), _isSigned(false)
 {
@@ -10,7 +16,7 @@ Form::Form(const std::string& inName, int inGradeToSign, int inGradeToExecute)
 	if (_gradeToSign > 150 || _gradeToExecute > 150) {
 		throw Form::GradeTooLowException();
 	}
-	std::cout << GREEN << "Form Default constructor called" << RESET << std::endl;
+	std::cout << GREEN << "Form constructor called" << RESET << std::endl;
 }
 
 Form::Form(const Form& other)
