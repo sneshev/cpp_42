@@ -20,6 +20,7 @@ class ScalarConverter {
 			SC_FLOAT,
 			SC_DOUBLE,
 			SC_PSEUDO,
+			SC_PSEUDOF,
 			SC_INVALID
 		};
 

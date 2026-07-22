@@ -2,6 +2,7 @@
 #include <cfloat>
 #include <cerrno>
 #include <cmath>
+#include <limits>
 
 #define PRINT_IMPOSSIBLE "char: impossible\nint: impossible\nfloat: impossible\ndouble: impossible"
 
@@ -28,9 +29,17 @@ ScalarConverter::~ScalarConverter() {
 }
 
 static bool isPseudoLiteral(const std::string& s) {
-	if (s == "nan"	|| s == "nanf")		{ return (true); } 
-	if (s == "+inf"	|| s == "+inff")	{ return (true); }
-	if (s == "-inf"	|| s == "-inff")	{ return (true); }
+	if (s == "nan")	 { return (true); } 
+	if (s == "+inf") { return (true); }
+	if (s == "-inf") { return (true); }
+
+	return (false);
+}
+
+static bool isPseudoLiteralF(const std::string& s) {
+	if (s == "nanf")  { return (true); } 
+	if (s == "+inff") { return (true); }
+	if (s == "-inff") { return (true); }
 
 	return (false);
 }
@@ -67,6 +76,10 @@ ScalarConverter::LiteralType ScalarConverter::getType(const std::string& s) {
 			std::cout << "literal" << std::endl;
 			return SC_PSEUDO;
 		}
+		if (isPseudoLiteralF(s)) {
+			std::cout << "literalF" << std::endl;
+			return SC_PSEUDOF;
+		}
 		if (isInt(s)) {
 			std::cout << "int" << std::endl;
 			return SC_INT;
@@ -88,12 +101,14 @@ ScalarConverter::LiteralType ScalarConverter::getType(const std::string& s) {
 	return SC_INVALID;
 }
 
+
 static void printCharStatement(char c) {
 	if (std::isprint(static_cast<unsigned char>(c)))
 		std::cout << "'" << c << "'";
 	else
 		std::cout << "Non displayable";
 }
+
 
 static void printFloatStatement(float f) {
 	std::cout << f;
@@ -110,16 +125,30 @@ static void printDoubleStatement(double d) {
 	}
 }
 
+static bool isInLimitChar(double c) {
+	if (c < std::numeric_limits<char>::min() || c > std::numeric_limits<char>::max())
+		return (false);
+	return (true);
+}
 
 static void printFromChar(char c) {
 	std::cout << "char: "; printCharStatement(c); std::cout << std::endl;
 	std::cout << "int: " << static_cast<int>(c) << std::endl;
-	std::cout << "float: "; printFloatStatement(static_cast<float>(c)); std::cout << std::endl;
-	std::cout << "double: "; printDoubleStatement(static_cast<double>(c)); std::cout << std::endl;
+	std::cout << "float: "; printFloatStatement(static_cast<float>(c));		std::cout << std::endl;
+	std::cout << "double: "; printDoubleStatement(static_cast<double>(c));	std::cout << std::endl;
 }
 
 static void printFromInt(int i) {
-	(void)i;
+	std::cout << "char: ";
+	if (!isInLimitChar(i))
+		std::cout << "impossible";
+	else
+		printCharStatement(static_cast<char>(i));
+	std::cout << std::endl;
+
+	std::cout << "int: " << i << std::endl;
+	std::cout << "float: ";	printFloatStatement(static_cast<float>(i));		std::cout << std::endl;
+	std::cout << "double: "; printDoubleStatement(static_cast<double>(i));	std::cout << std::endl;
 }
 
 static void printFromDouble(double d) {
@@ -137,6 +166,11 @@ static void printFromPseudo(const std::string& literal) {
 
 }
 
+static void printFromPseudoF(const std::string& literal) {
+	(void)literal;
+
+}
+
 void ScalarConverter::convert(const std::string& literal)
 {
 	switch (getType(literal))
@@ -146,6 +180,7 @@ void ScalarConverter::convert(const std::string& literal)
 		case SC_DOUBLE:	{ printFromDouble(std::strtod(literal.c_str(), NULL));	break; }
 		case SC_FLOAT:	{ printFromFloat(std::strtof(literal.c_str(), NULL));	break; }
 		case SC_PSEUDO:	{ printFromPseudo(literal);								break; }
+		case SC_PSEUDOF:{ printFromPseudoF(literal);							break; }
 		default: {
             std::cout << PRINT_IMPOSSIBLE << std::endl;
 			break;
