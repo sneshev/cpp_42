@@ -114,6 +114,8 @@ static void printFloatStatement(float f) {
 	std::cout << f;
 	if (f == std::floor(f)) {
 		std::cout << ".0f";
+	} else {
+		std::cout << "f";
 	}
 }
 
@@ -127,6 +129,12 @@ static void printDoubleStatement(double d) {
 
 static bool isInLimitChar(double c) {
 	if (c < std::numeric_limits<char>::min() || c > std::numeric_limits<char>::max())
+		return (false);
+	return (true);
+}
+
+static bool isInLimitInt(double i) {
+	if (i < std::numeric_limits<int>::min() || i > std::numeric_limits<int>::max())
 		return (false);
 	return (true);
 }
@@ -151,15 +159,40 @@ static void printFromInt(int i) {
 	std::cout << "double: "; printDoubleStatement(static_cast<double>(i));	std::cout << std::endl;
 }
 
-static void printFromDouble(double d) {
-	(void)d;
-
-}
-
 static void printFromFloat(float f) {
-	(void)f;
+	std::cout << "char: ";
+	if (!isInLimitChar(f)) std::cout << "impossible";
+	else printCharStatement(static_cast<char>(f));
+	std::cout << std::endl;
+
+	std::cout << "int: ";
+	if (!isInLimitInt(f)) std::cout << "impossible";
+	else std::cout << static_cast<int>(f);
+	std::cout << std::endl;
+
+	std::cout << "float: ";  printFloatStatement(f);  std::cout << std::endl;
+	std::cout << "double: "; printDoubleStatement(f); std::cout << std::endl;
+
 
 }
+
+
+static void printFromDouble(double d) {
+	std::cout << "char: ";
+	if (!isInLimitChar(d)) std::cout << "impossible";
+	else printCharStatement(static_cast<char>(d));
+	std::cout << std::endl;
+
+	std::cout << "int: ";
+	if (!isInLimitInt(d)) std::cout << "impossible";
+	else std::cout << static_cast<int>(d);
+	std::cout << std::endl;
+
+	std::cout << "float: ";  printFloatStatement(d);  std::cout << std::endl;
+	std::cout << "double: "; printDoubleStatement(d); std::cout << std::endl;
+}
+
+
 
 static void printFromPseudo(const std::string& literal) {
 	(void)literal;
