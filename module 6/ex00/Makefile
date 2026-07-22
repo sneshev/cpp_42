@@ -1,4 +1,4 @@
-NAME = scalarconverter
+NAME = convert
 COM = c++
 FLAGS = -Wall -Wextra -Werror -g
 

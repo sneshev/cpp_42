@@ -30,6 +30,7 @@ ScalarConverter::~ScalarConverter() {
 
 static bool isPseudoLiteral(const std::string& s) {
 	if (s == "nan")	 { return (true); } 
+	if (s == "inf") { return (true); }
 	if (s == "+inf") { return (true); }
 	if (s == "-inf") { return (true); }
 
@@ -38,6 +39,7 @@ static bool isPseudoLiteral(const std::string& s) {
 
 static bool isPseudoLiteralF(const std::string& s) {
 	if (s == "nanf")  { return (true); } 
+	if (s == "inff") { return (true); }
 	if (s == "+inff") { return (true); }
 	if (s == "-inff") { return (true); }
 
@@ -72,32 +74,19 @@ static bool isChar(const std::string& s) {
 
 ScalarConverter::LiteralType ScalarConverter::getType(const std::string& s) {
 	if (!s.empty()) {
-		if (isPseudoLiteral(s)) {
-			std::cout << "literal" << std::endl;
+		if (isPseudoLiteral(s))
 			return SC_PSEUDO;
-		}
-		if (isPseudoLiteralF(s)) {
-			std::cout << "literalF" << std::endl;
+		if (isPseudoLiteralF(s))
 			return SC_PSEUDOF;
-		}
-		if (isInt(s)) {
-			std::cout << "int" << std::endl;
+		if (isInt(s))
 			return SC_INT;
-		}
-		if (isDouble(s)) {
-			std::cout << "double" << std::endl;
+		if (isDouble(s))
 			return SC_DOUBLE;
-		}
-		if (isFloat(s)) {
-			std::cout << "float" << std::endl;
+		if (isFloat(s))
 			return SC_FLOAT;
-		}
-		if (isChar(s)) {
-			std::cout << "char" << std::endl;
+		if (isChar(s))
 			return SC_CHAR;
-		}
 	}
-	std::cout << "WRONG" << std::endl;
 	return SC_INVALID;
 }
 
@@ -173,7 +162,6 @@ static void printFromFloat(float f) {
 	std::cout << "float: ";  printFloatStatement(f);  std::cout << std::endl;
 	std::cout << "double: "; printDoubleStatement(f); std::cout << std::endl;
 
-
 }
 
  
@@ -195,13 +183,16 @@ static void printFromDouble(double d) {
 
 
 static void printFromPseudo(const std::string& literal) {
-	(void)literal;
+	if (literal == "inf") { printFromPseudo("+inf"); return ; }
 
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: " << literal << "f" << std::endl;
+	std::cout << "double: " << literal << std::endl;
 }
 
 static void printFromPseudoF(const std::string& literal) {
-	(void)literal;
-
+	printFromPseudo(literal.substr(0, literal.length() - 1));
 }
 
 void ScalarConverter::convert(const std::string& literal)
