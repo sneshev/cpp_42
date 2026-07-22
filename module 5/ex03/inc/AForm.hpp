@@ -21,6 +21,7 @@ class AForm {
 		virtual void doAction() const = 0;
 
 	public:
+		AForm();
 		AForm(const std::string& inName, int inGradeToSign, int inGradeToExecute);
 		AForm(const AForm& other);
 		AForm& operator=(const AForm& other);

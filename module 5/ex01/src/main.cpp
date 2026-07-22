@@ -60,6 +60,7 @@ int main() {
 		Bureaucrat b("Carol", 50);
 		Form f("Tax Form", 50, 100);
 		b.signForm(f);
+		b.signForm(f);
 		std::cout << f << std::endl;
 	}
 	catch (std::exception& e) {
