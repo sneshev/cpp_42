@@ -1,0 +1,157 @@
+#include "../inc/ScalarConverter.hpp"
+#include <cfloat>
+#include <cerrno>
+#include <cmath>
+
+#define PRINT_IMPOSSIBLE "char: impossible\nint: impossible\nfloat: impossible\ndouble: impossible"
+
+
+ScalarConverter::ScalarConverter() {
+	std::cout << GREEN << "ScalarConverter Default constructor called" << RESET << std::endl;
+}
+
+ScalarConverter::ScalarConverter(const ScalarConverter& other) {
+	std::cout << BLUE << "ScalarConverter Copy constructor called" << RESET << std::endl;
+	*this = other;
+}
+
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other) {
+	std::cout << BLUE << "ScalarConverter Copy assignment operator called" << RESET << std::endl;
+	if (this != &other) {
+
+	}
+	return (*this);
+}
+
+ScalarConverter::~ScalarConverter() {
+	std::cout << RED << "ScalarConverter Destructor called" << RESET << std::endl;
+}
+
+static bool isPseudoLiteral(const std::string& s) {
+	if (s == "nan"	|| s == "nanf")		{ return (true); } 
+	if (s == "+inf"	|| s == "+inff")	{ return (true); }
+	if (s == "-inf"	|| s == "-inff")	{ return (true); }
+
+	return (false);
+}
+
+static bool isInt(const std::string& s) {
+	char *end;
+	long res = std::strtol(s.c_str(), &end, 10);
+
+	return (*end == '\0' && (res >= INT32_MIN && res <= INT32_MAX));
+}
+
+static bool isDouble(const std::string& s) {
+	char *end; errno = 0;
+	std::strtod(s.c_str(), &end);
+
+	return (*end == '\0' && errno != ERANGE);
+}
+
+static bool isFloat(const std::string& s) {
+	char *end; errno = 0;
+	double res = std::strtod(s.c_str(), &end);
+
+	return (*end == 'f' && *(end + 1) == '\0')
+		&& (errno != ERANGE && res >= FLT_MIN && res <= FLT_MAX);
+}
+
+static bool isChar(const std::string& s) {
+	return (s.length() == 1 && std::isprint(s[0]));
+}
+
+ScalarConverter::LiteralType ScalarConverter::getType(const std::string& s) {
+	if (!s.empty()) {
+		if (isPseudoLiteral(s)) {
+			std::cout << "literal" << std::endl;
+			return SC_PSEUDO;
+		}
+		if (isInt(s)) {
+			std::cout << "int" << std::endl;
+			return SC_INT;
+		}
+		if (isDouble(s)) {
+			std::cout << "double" << std::endl;
+			return SC_DOUBLE;
+		}
+		if (isFloat(s)) {
+			std::cout << "float" << std::endl;
+			return SC_FLOAT;
+		}
+		if (isChar(s)) {
+			std::cout << "char" << std::endl;
+			return SC_CHAR;
+		}
+	}
+	std::cout << "WRONG" << std::endl;
+	return SC_INVALID;
+}
+
+static void printCharStatement(char c) {
+	if (std::isprint(static_cast<unsigned char>(c)))
+		std::cout << "'" << c << "'";
+	else
+		std::cout << "Non displayable";
+}
+
+static void printFloatStatement(float f) {
+	std::cout << f;
+	if (f == std::floor(f)) {
+		std::cout << ".0f";
+	}
+}
+
+
+static void printDoubleStatement(double d) {
+	std::cout << d;
+	if (d == std::floor(d)) {
+		std::cout << ".0";
+	}
+}
+
+
+static void printFromChar(char c) {
+	std::cout << "char: "; printCharStatement(c); std::cout << std::endl;
+	std::cout << "int: " << static_cast<int>(c) << std::endl;
+	std::cout << "float: "; printFloatStatement(static_cast<float>(c)); std::cout << std::endl;
+	std::cout << "double: "; printDoubleStatement(static_cast<double>(c)); std::cout << std::endl;
+}
+
+static void printFromInt(int i) {
+	(void)i;
+}
+
+static void printFromDouble(double d) {
+	(void)d;
+
+}
+
+static void printFromFloat(float f) {
+	(void)f;
+
+}
+
+static void printFromPseudo(const std::string& literal) {
+	(void)literal;
+
+}
+
+void ScalarConverter::convert(const std::string& literal)
+{
+	switch (getType(literal))
+	{
+		case SC_CHAR:	{ printFromChar(literal[0]); 							break; }
+		case SC_INT:	{ printFromInt(std::atoi(literal.c_str()));				break; }
+		case SC_DOUBLE:	{ printFromDouble(std::strtod(literal.c_str(), NULL));	break; }
+		case SC_FLOAT:	{ printFromFloat(std::strtof(literal.c_str(), NULL));	break; }
+		case SC_PSEUDO:	{ printFromPseudo(literal);								break; }
+		default: {
+            std::cout << PRINT_IMPOSSIBLE << std::endl;
+			break;
+		}
+	}
+}
+
+
+
