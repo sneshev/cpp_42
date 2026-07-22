@@ -176,7 +176,7 @@ static void printFromFloat(float f) {
 
 }
 
-
+ 
 static void printFromDouble(double d) {
 	std::cout << "char: ";
 	if (!isInLimitChar(d)) std::cout << "impossible";
