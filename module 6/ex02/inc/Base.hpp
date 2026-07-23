@@ -13,9 +13,6 @@ class C;
 
 class Base {
 	private:
-		Base();
-		Base(const Base& other);
-		Base& operator=(const Base& other);
 		
 	public:
 		virtual ~Base();

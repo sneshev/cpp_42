@@ -4,23 +4,6 @@
 #include "../inc/C.hpp"
 #include <ctime>
 
-Base::Base() {
-	std::cout << GREEN << "Base Default constructor called" << RESET << std::endl;
-}
-
-Base::Base(const Base& other) {
-	std::cout << BLUE << "Base Copy constructor called" << RESET << std::endl;
-	*this = other;
-}
-
-Base& Base::operator=(const Base& other) {
-	std::cout << BLUE << "Base Copy assignment operator called" << RESET << std::endl;
-	if (this != &other) {
-
-	}
-	return (*this);
-}
-
 Base::~Base() {
 	std::cout << RED << "Base Destructor called" << RESET << std::endl;
 }
@@ -53,15 +36,15 @@ void Base::identify(Base* p) {
 
 void Base::identify(Base& p) {
 	try {
-		dynamic_cast<A&>(p);
+		(void)dynamic_cast<A&>(p);
 		std::cout << "ref to A" << std::endl;
 	} catch (std::bad_cast&) {}
 	try {
-		dynamic_cast<B&>(p);
+		(void)dynamic_cast<B&>(p);
 		std::cout << "ref to B" << std::endl;
 	} catch (std::bad_cast&) {}
 	try {
-		dynamic_cast<C&>(p);
+		(void)dynamic_cast<C&>(p);
 		std::cout << "ref to C" << std::endl;
 	} catch (std::bad_cast&) {}
 }
