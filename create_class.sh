@@ -1,29 +1,32 @@
 #!/bin/bash
 
-# Usage: ./create_class.sh ClassName
+# Usage: ./create.sh ClassName [AnotherClassName ...]
 
 if [ -z "$1" ]; then
-  echo "Usage: $0 <ClassName>"
+  echo "Usage: $0 <ClassName> [AnotherClassName ...]"
   exit 1
 fi
 
-className="$1"
-dirName=$(echo "$className" | tr '[:upper:]' '[:lower:]')
+progName=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 
 mkdir -p "src" "inc"
 
-#	MAIN FILE
-cat > "src/main.cpp" << EOF
-#include "../inc/${className}.hpp"
+#	MAIN FILE (includes every class header)
+{
+	for className in "$@"; do
+		echo "#include \"../inc/${className}.hpp\""
+	done
+	echo ""
+	echo "int main() {"
+	echo ""
+	echo -e "\treturn (0);"
+	echo "}"
+} > "src/main.cpp"
 
-int main() {
+for className in "$@"; do
 
-	return (0);
-}
-EOF
-
-#	HEADER FILE
-cat > "inc/${className}.hpp" << EOF
+	#	HEADER FILE
+	cat > "inc/${className}.hpp" << EOF
 #pragma once
 
 #include <iostream>
@@ -45,8 +48,8 @@ class ${className} {
 };
 EOF
 
-#	CPP FILE
-cat > "src/${className}.cpp" << EOF
+	#	CPP FILE
+	cat > "src/${className}.cpp" << EOF
 #include "../inc/${className}.hpp"
 
 ${className}::${className}() {
@@ -71,9 +74,18 @@ ${className}::~${className}() {
 }
 EOF
 
+done
+
+#	Build the SRC list for the Makefile
+srcList="\$(SRC_DIR)/main.cpp"
+for className in "$@"; do
+	srcList="${srcList} \\
+		\$(SRC_DIR)/${className}.cpp"
+done
+
 #	Makefile
 cat > "Makefile" << EOF
-NAME = ${dirName}
+NAME = ${progName}
 COM = c++
 FLAGS = -Wall -Wextra -Werror 
 
@@ -81,8 +93,7 @@ SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = inc
 
-SRC =	\$(SRC_DIR)/main.cpp \\
-		\$(SRC_DIR)/${className}.cpp
+SRC =	${srcList}
 
 OBJ = \$(patsubst \$(SRC_DIR)/%.cpp, \$(OBJ_DIR)/%.o, \$(SRC))
 
@@ -111,5 +122,7 @@ EOF
 echo "Created:"
 echo "  Makefile"
 echo "  src/main.cpp"
-echo "  src/${className}.cpp"
-echo "  inc/${className}.hpp"
+for className in "$@"; do
+	echo "  src/${className}.cpp"
+	echo "  inc/${className}.hpp"
+done
