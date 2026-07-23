@@ -7,13 +7,20 @@
 #define BLUE "\033[34m"
 #define RESET "\033[0m"
 
+class A;
+class B;
+class C;
+
 class Base {
 	private:
-		
-	public:
 		Base();
 		Base(const Base& other);
 		Base& operator=(const Base& other);
-		~Base();
 		
+	public:
+		virtual ~Base();
+		
+		static Base* generate();
+		static void  identify(Base* p);
+		static void  identify(Base& p);
 };
