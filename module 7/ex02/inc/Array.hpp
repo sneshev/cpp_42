@@ -24,11 +24,11 @@ class Array {
 
 		unsigned int size() const;
 
-		class OutOfBoundsException : public std::excetion {
+		class OutOfBoundsException : public std::exception {
 			public:
 				virtual const char* what() const noexcept;
 		};
-		
+
 };
 
 # include "Array.tpp"
