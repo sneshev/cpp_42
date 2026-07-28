@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <limits>
 #include <set>
 
 #define RED "\033[31m"
@@ -11,7 +12,7 @@
 class Span {
 	private:
 		std::multiset<int> _numbers;
-		unsigned int _size;
+		unsigned int _maxSize;
 
 	public:
 		Span();
@@ -20,8 +21,7 @@ class Span {
 		Span& operator=(const Span& other);
 		~Span();
 		
-		void addNumber(int nb); // will be used in order to fill it. 
-						  // Any attempt to add a new element if there are already N elements stored should throw an exception.
+		void addNumber(int nb);
 
 		size_t shortestSpan();
 		size_t longestSpan();
@@ -31,6 +31,10 @@ class Span {
 				virtual const char* what() const noexcept;
 		};
 
-
-
-} ;
+		template <typename inputIterator>
+		void addNumbers(inputIterator begin, inputIterator end) {
+			for (; begin != end; ++begin) {
+				addNumber(*begin);
+			}
+		}
+};
