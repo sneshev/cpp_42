@@ -24,6 +24,7 @@ class BitcoinExchange {
 		std::map<std::string, float> _db;
 
 		void loadDatabase(const char* dbFileName);
+		float calculatePrice(std::string& date, float amount);
 
 	public:
 		BitcoinExchange();
@@ -33,5 +34,5 @@ class BitcoinExchange {
 		~BitcoinExchange();
 
 		void printDB();
-		
+		void checkPrice(const std::string& s);
 };

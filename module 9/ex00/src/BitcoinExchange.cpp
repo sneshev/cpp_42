@@ -117,3 +117,51 @@ void BitcoinExchange::loadDatabase(const char* dbFileName) {
 	if (_db.empty())
 		exit(giveError(ERR_DBEMPTY));
 }
+
+static void validateLine(const std::string& s, std::string& inDate, float& inAmount) {
+	std::istringstream iss(s);
+	int year, month, day;
+	char c1, c2, c3;
+	float amount;
+
+	if (!(iss >> year >> c1 >> month >> c2 >> day >> c3 >> amount ))
+		throw std::runtime_error(std::string("bad input: " + s));
+	if (c1 != '-' || c2 != '-' || c3 != '|')
+		throw std::runtime_error(std::string("bad input: " + s));
+	if (!iss.eof())
+		throw std::runtime_error(std::string("bad input: " + s));
+	if (!isValidDate(year, month, day))
+		throw std::runtime_error(std::string("bad input: " + s));
+	if (amount < 0)
+		throw std::runtime_error(std::string("not a positive number"));
+	if (amount > 1000)
+		throw std::runtime_error(std::string("too large a number"));
+
+	inAmount = amount;
+
+	std::istringstream iss2(s);
+	std::getline(iss2, inDate, '|');
+}
+
+float BitcoinExchange::calculatePrice(std::string& date, float amount) {
+	std::map<std::string, float>::iterator it = _db.upper_bound(date);
+	if (it == _db.begin())
+		throw std::runtime_error("date too early");
+
+	it--;
+
+	return (amount * it->second);
+}
+
+void BitcoinExchange::checkPrice(const std::string& s) {
+	std::string date;
+	float amount;
+
+	try {
+		validateLine(s, date, amount);
+		std::cout << date << "=> " << amount << " = " << calculatePrice(date, amount) << std::endl;
+	} catch (std::exception& e) {
+		std::cout << "Error: " << e.what() << "." << std::endl;
+	}
+}
+
