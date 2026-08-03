@@ -35,13 +35,16 @@ std::vector<number> PmergeMe::makePairsVec(std::vector<number> vec, number &stra
 		++it;
 		if (it == vec.end()) {
 			straggler = nb;
+			break;
 		}
 		else {
 			if (nb.val > (*it).val) {
 				nb.remembers.push_back(*it);
+				paired.push_back(nb);
 			}
 			else {
 				(*it).remembers.push_back(nb);
+				paired.push_back(*it);
 			}
 		}
 	}
@@ -51,8 +54,8 @@ std::vector<number> PmergeMe::makePairsVec(std::vector<number> vec, number &stra
 
 
 std::vector<number> PmergeMe::sortVec(std::vector<number> vec) { 
-	if (vec.size() == 2) {
-		if (vec.begin()->val < vec.rbegin()->val)
+	if (vec.size() <= 2) {
+		if (vec.begin()->val > vec.rbegin()->val)
 			std::swap(*vec.begin(), *vec.rbegin());
 		return vec;
 	}
@@ -69,16 +72,22 @@ std::vector<number> PmergeMe::sortVec(std::vector<number> vec) {
 	newVec.insert(newVec.begin(), smallest);
 
 	// putting back other losers in reverse order
-	std::vector<number>::iterator it = newVec.end();
-	--it;
-	for (; it != newVec.begin(); --it) {
-		number n = it->remembers.back();
-		it->remembers.pop_back();
-		newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), n), n);
-		
+	std::vector<number>::iterator stop = newVec.begin(); ++stop;
+	std::vector<number>::iterator it = newVec.end(); --it;
 
-		/* LEFT OFF HERE! */
+	for (; it != stop; --it) {
+		if (it->remembers.size() >= 1) {
+			number n = it->remembers.back();
+			it->remembers.pop_back();
+			newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), n), n);
+		}
 	}
+
+	if (straggler.val != -1) {
+		newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), straggler), straggler);
+
+	}
+
 
 	return newVec;
 }
