@@ -13,7 +13,6 @@ RPN& RPN::operator=(const RPN& other) {
 	std::cout << BLUE << "RPN Copy assignment operator called" << RESET << std::endl;
 	if (this != &other) {
 		_s = other._s;
-		_expecting = other._expecting;
 	}
 	return (*this);
 }
@@ -36,6 +35,9 @@ static bool isNum(char c) {
 }
 
 void RPN::evaluate(char sign) {
+	if (_s.size() < 2)
+		throw std::runtime_error("bad input");
+
 	int b = _s.top(); _s.pop();
 	int a = _s.top(); _s.pop();
 
@@ -51,17 +53,11 @@ void RPN::evaluate(char sign) {
 }
 
 void RPN::takeElement(char c) {
-	if (_expecting == NUM1 && isNum(c)) {
+	if (isNum(c)) {
 		_s.push(c - '0');
-		_expecting = NUM2;
 	}
-	else if (_expecting == NUM2 && isNum(c)) {
-		_s.push(c - '0');
-		_expecting = SIGN;
-	} 
-	else if (_expecting == SIGN && isSign(c)) {
+	else if (isSign(c)) {
 		evaluate(c);
-		_expecting = NUM2;
 	} 
 	else {
 		throw std::runtime_error("bad input");

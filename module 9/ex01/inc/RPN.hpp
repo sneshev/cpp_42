@@ -10,16 +10,9 @@
 
 void error();
 
-enum expecting {
-	NUM1,
-	NUM2,
-	SIGN
-};
-
 class RPN {
 	private:
 		std::stack<int> _s;
-		expecting _expecting = NUM1;
 
 		void evaluate(char sign);
 	public:
