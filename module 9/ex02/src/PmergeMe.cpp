@@ -27,30 +27,109 @@ void PmergeMe::addNumber(unsigned int n) {
 	std::cout << n << std::endl;
 }
 
-std::vector<std::pair<int, void *>> PmergeMe::makePairsVec(
-	std::vector<std::pair<int, void *>> vec,
-	int &straggler
-) {
-	std::vector<std::pair<int, void *>> pairs;
-	std::vector<std::pair<int, void *>>::iterator it = vec.begin();
+std::vector<number> PmergeMe::makePairsVec(std::vector<number> vec, number &straggler) {
+	std::vector<number> paired;
 
-	while (it != vec.end()) {
-
-		int nb = it->first;
+	for (std::vector<number>::iterator it = vec.begin(); it != vec.end(); ++it) {
+		number nb = *it;
 		++it;
-		if (it == _vec.end()) {
+		if (it == vec.end()) {
 			straggler = nb;
 		}
 		else {
-			if (nb > *it)
-				pairs.push_back(std::make_pair(nb, *it));
-			else
-				pairs.push_back(std::make_pair(*it, nb));
-			it++;
+			if (nb.val > (*it).val) {
+				nb.remembers.push_back(*it);
+			}
+			else {
+				(*it).remembers.push_back(nb);
+			}
 		}
 	}
-	return (pairs);
+
+	return (paired);
 }
+
+
+std::vector<number> PmergeMe::sortVec(std::vector<number> vec) { 
+	if (vec.size() == 2) {
+		if (vec.begin()->val < vec.rbegin()->val)
+			std::swap(*vec.begin(), *vec.rbegin());
+		return vec;
+	}
+
+	number straggler; straggler.val = -1;
+	std::vector<number> pairs = makePairsVec(vec, straggler);
+
+	// recursion
+	std::vector<number> newVec = sortVec(pairs);
+
+	// putting back smallest number
+	std::vector<number>::iterator it = newVec.begin();
+	number smallest = it->remembers.back();
+	newVec.begin()->remembers.pop_back();
+	newVec.insert(newVec.begin(), smallest);
+	++it;
+
+	// putting back other losers
+	for (; it != newVec.end(); ++it) {
+		/* LEFT OFF HERE! */
+	}
+
+
+}
+
+void PmergeMe::sortVec() {
+	if (_vec.size() < 2)
+		throw std::runtime_error("sortVec: too few arguments");
+
+	std::vector<int>::iterator it;
+
+	std::vector<number> numberVector;
+	for (it = _vec.begin(); it != _vec.end(); ++it) {
+		number n;
+		n.val = *it;
+		numberVector.push_back(n);
+	}
+	sortVec(numberVector);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// void PmergeMe::sortDeq() {
+
+
+// }
+
+
+
+
+
+// void PmergeMe::sortVec(std::vector<int> vec) { 
+	// if (vec.size() < 2)
+		// return ;
+	// int straggler = -1;
+	// std::vector<std::pair<int, int>> pairs = makePairsVec(straggler);
+// 
+	// std::vector<std::pair<int, int>> bigFromPair;
+	// std::vector<std::pair<int, int>> smallFromPair;
+	// indexPairs(pairs, bigFromPair, smallFromPair);
+// 
+	// 
+// }
+
+
+
+
+
 /*
 
 	1 3 5 7 8
@@ -294,60 +373,3 @@ std::vector<std::pair<int, void *>> PmergeMe::makePairsVec(
 
 
 */
-void indexPairs(
-	std::vector<std::pair<int, int>>& og,
-	std::vector<std::pair<int, int>>& biggerVec,
-	std::vector<std::pair<int, int>>& smallerVec
-	) {
-		std::vector<std::pair<int, int>>::iterator it;
-		int i = 0;
-		for (it = og.begin(); it != og.end(); ++it, ++i) {
-			biggerVec.push_back(std::make_pair((*it).first, i));
-			smallerVec.push_back(std::make_pair((*it).second, i));
-		}
-}
-
-void PmergeMe::sortVec(std::vector<std::pair<int, void *>> vec) { 
-	if (vec.size() < 2)
-		return ;
-
-	int straggler = -1;
-	std::vector<std::pair<int, void *>> pairs = makePairsVec(vec, straggler);
-
-	// std::vector<std::pair<int, int>> bigFromPair;
-	// std::vector<std::pair<int, int>> smallFromPair;
-	// indexPairs(pairs, bigFromPair, smallFromPair);
-
-	
-}
-
-void PmergeMe::sortVec() {
-	std::vector<std::pair<int, void *>> newVec;
-	std::vector<int>::iterator it;
-	for (it = _vec.begin(); it != _vec.end(); ++it) {
-		newVec.push_back(std::make_pair(*it, nullptr));
-	}
-	sortVec(newVec);
-}
-
-void PmergeMe::sortDeq() {
-
-
-}
-
-
-
-
-
-// void PmergeMe::sortVec(std::vector<int> vec) { 
-	// if (vec.size() < 2)
-		// return ;
-	// int straggler = -1;
-	// std::vector<std::pair<int, int>> pairs = makePairsVec(straggler);
-// 
-	// std::vector<std::pair<int, int>> bigFromPair;
-	// std::vector<std::pair<int, int>> smallFromPair;
-	// indexPairs(pairs, bigFromPair, smallFromPair);
-// 
-	// 
-// }

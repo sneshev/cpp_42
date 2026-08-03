@@ -11,6 +11,11 @@
 #define BLUE "\033[34m"
 #define RESET "\033[0m"
 
+typedef struct s_number {
+	int val;
+	std::vector<s_number> remembers;
+} number;
+
 class PmergeMe {
 	private:
 		std::vector<int> _vec;
@@ -28,15 +33,15 @@ class PmergeMe {
 
 		void addNumber(unsigned int n);
 		void sortVec() ;
-		void sortDeq() ;
-		void printResult() const ;
+		// void sortDeq() ;
+		// void printResult() const ;
 
 
 	/* internal for sorting */
 	private:
-		std::vector<std::pair<int, void *>> makePairsVec(std::vector<std::pair<int, void *>> vec, int &straggler);
+		std::vector<number> makePairsVec(std::vector<number> vec, number &straggler);
+		std::vector<number> sortVec(std::vector<number> vec);
 
-		void sortVec(std::vector<std::pair<int, void *>> vec);
 		// void sortVec(std::vector<int> vec) ;
-		void sortDeq(std::deque<int> deq) ;
+		// void sortDeq(std::deque<int> deq) ;
 };
