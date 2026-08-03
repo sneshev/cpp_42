@@ -1,10 +1,5 @@
 #include "../inc/RPN.hpp"
 
-void error() {
-	std::cout << "Error" << std::endl;
-	exit(1);
-}
-
 int main(int argc, char* argv[]) {
 	if (argc != 2)
 		error();
