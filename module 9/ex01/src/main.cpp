@@ -20,7 +20,8 @@ int main(int argc, char* argv[]) {
 		int res = rpn.getResult();
 		std::cout << res << std::endl;
 	} catch (std::exception& s) {
-		error();
+		std::cout << "Error" << std::endl;
+		return (1);
 	}
 
 	return (0);
