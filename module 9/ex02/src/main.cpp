@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	p.sortVec();
-	p.sortDeq();
-	p.printResult();
+	// p.sortDeq();
+	// p.printResult();
 	return (0);
 }

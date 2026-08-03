@@ -11,18 +11,23 @@
 #define BLUE "\033[34m"
 #define RESET "\033[0m"
 
-typedef struct s_number {
-	int val;
-	std::vector<s_number> remembers;
-} number;
+class number {
+	public:
+		int val;
+		std::vector<number> remembers;
+
+	bool operator<(const number& other) const {
+		return val < other.val;
+    }
+};
 
 class PmergeMe {
 	private:
 		std::vector<int> _vec;
-		std::deque<int>  _deq;
+		// std::deque<int>  _deq;
 
-		double _vecUs;
-		double _deqUs;
+		// double _vecUs;
+		// double _deqUs;
 
 	public:
 		PmergeMe();

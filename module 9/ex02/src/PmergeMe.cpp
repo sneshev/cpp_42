@@ -24,7 +24,7 @@ PmergeMe::~PmergeMe() {
 
 
 void PmergeMe::addNumber(unsigned int n) {
-	std::cout << n << std::endl;
+	_vec.push_back(n);
 }
 
 std::vector<number> PmergeMe::makePairsVec(std::vector<number> vec, number &straggler) {
@@ -64,18 +64,23 @@ std::vector<number> PmergeMe::sortVec(std::vector<number> vec) {
 	std::vector<number> newVec = sortVec(pairs);
 
 	// putting back smallest number
-	std::vector<number>::iterator it = newVec.begin();
-	number smallest = it->remembers.back();
+	number smallest = newVec.begin()->remembers.back();
 	newVec.begin()->remembers.pop_back();
 	newVec.insert(newVec.begin(), smallest);
-	++it;
 
-	// putting back other losers
-	for (; it != newVec.end(); ++it) {
+	// putting back other losers in reverse order
+	std::vector<number>::iterator it = newVec.end();
+	--it;
+	for (; it != newVec.begin(); --it) {
+		number n = it->remembers.back();
+		it->remembers.pop_back();
+		newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), n), n);
+		
+
 		/* LEFT OFF HERE! */
 	}
 
-
+	return newVec;
 }
 
 void PmergeMe::sortVec() {
@@ -90,7 +95,12 @@ void PmergeMe::sortVec() {
 		n.val = *it;
 		numberVector.push_back(n);
 	}
-	sortVec(numberVector);
+	std::vector<number> v = sortVec(numberVector);
+
+	for (std::vector<number>::iterator it = v.begin(); it != v.end(); ++it) {
+		std::cout << it->val << " ";
+	}
+	std::cout << std::endl;
 }
 
 

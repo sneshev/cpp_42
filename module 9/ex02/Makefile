@@ -1,5 +1,5 @@
 NAME = pmergeme
-COM = c++
+COM = c++ -g
 FLAGS = -Wall -Wextra -Werror 
 
 SRC_DIR = src
