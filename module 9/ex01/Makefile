@@ -1,4 +1,4 @@
-NAME = rpn
+NAME = RPN
 COM = c++ -g
 FLAGS = -Wall -Wextra -Werror 
 
