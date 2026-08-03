@@ -75,17 +75,24 @@ std::vector<number> PmergeMe::sortVec(std::vector<number> vec) {
 	std::vector<number>::iterator stop = newVec.begin(); ++stop;
 	std::vector<number>::iterator it = newVec.end(); --it;
 
-	for (; it != stop; --it) {
+	int i = 0;				/* INSERTING A NUMBER INVALIDATES THE ITERATORS!!!!! */
+	while (it != stop) {		/* FIGURE THIS OUT AND IT SEEMS OK. EXAMPLE BAD INPUT ["23", "0", "2", "30", "4", "5", "1", "420"]*/
 		if (it->remembers.size() >= 1) {
 			number n = it->remembers.back();
 			it->remembers.pop_back();
 			newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), n), n);
 		}
+
+		stop = newVec.begin(); ++stop;
+		it = newVec.end(); --it;
+		for (int j = 0; j < i; j++) {
+			--it;
+		}
+		i++;
 	}
 
 	if (straggler.val != -1) {
 		newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), straggler), straggler);
-
 	}
 
 
