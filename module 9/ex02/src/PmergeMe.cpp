@@ -88,10 +88,10 @@ static void putBackLosers(std::vector<number>& v, number straggler) {
 			v.insert(std::lower_bound(v.begin(), v.end(), b), b);
 		}
 
-		// jump to next a respecting the sequence
-		aIndex++;
-		// aIndex = getNextA(aIndex, jIndex);
-		// if (aIndex > aSize) {
+		aIndex++;								/* ITS DIFFERENT DEPENDING ON WHETHER THE INSERTED NUMBER */
+		// // jump to next a respecting the sequence /* LETS SAY a3 IS INSERTED BEFORE OR AFTER THE PREVIOUS */
+		// aIndex = getNextA(aIndex, jIndex);		 /* NUMBER a2 OR NOT. THE DIFFERENCE IS IN INDEX OF 1 ON */
+		// if (aIndex > aSize) {                     /* THEN THE NEXT a WILL HAVE A DIFFERENT INDEX IN THE VECTOR*/ 
 		// 	clampA(aIndex, aSize, stopOnNextJump);
 		// }
 	}
