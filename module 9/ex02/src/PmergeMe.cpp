@@ -146,8 +146,9 @@ void PmergeMe::sortVec() {
 	}
 	std::vector<number> v = sortVec(numberVector);
 
-	for (std::vector<number>::iterator it = v.begin(); it != v.end(); ++it) {
-		std::cout << it->val << " ";
+	for (size_t i = 0; i < v.size(); ++i) {
+		_vec[i] = v[i].val;
+		std::cout << _vec[i] << " ";
 	}
 	std::cout << std::endl;
 }

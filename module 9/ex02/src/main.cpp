@@ -13,19 +13,25 @@ int parseNumber(std::string s) {
 }
 
 int main(int argc, char *argv[]) {
-	if (argc < 3)
+	if (argc < 3) {
+		std::cout << "Error: " << "too few arguments" << std::endl;
 		return (1);
+	}
 
 	PmergeMe p;
-	for (int i = 1; argv[i]; i++) {
-		try {
+	try {
+		for (int i = 1; argv[i]; i++) {
 			int nb = parseNumber(std::string(argv[i]));
 			p.addNumber(nb);
-		} catch (const std::exception& e) {
-			std::cout << "Error: " << e.what() << std::endl;
-			return(1);
 		}
+		p.sortVec();
 	}
+	catch (const std::exception& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+		return(1);
+	}
+
+
 	p.sortVec();
 	// p.sortDeq();
 	// p.printResult();
