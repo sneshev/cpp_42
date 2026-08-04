@@ -39,12 +39,16 @@ void PmergeMe::makePairs(std::vector<number>& vec, number &straggler) {
 	std::vector<number> paired;
 
 	for (std::vector<number>::iterator it = vec.begin(); it != vec.end(); ++it) {
+
+		// pick the 2 neighboring numbers (or put odd one in straggler)
 		number nb = *it;
 		++it;
 		if (it == vec.end()) {
 			straggler = nb;
 			break;
 		}
+
+		// push number into bigger number's remember vector
 		else {
 			if (nb.val > (*it).val) {
 				nb.remembers.push_back(*it);
@@ -94,6 +98,7 @@ static void putBackLosers(std::vector<number>& v, number& straggler) {
 	std::vector<number> tmpVec = v;
 	bool stopOnNextJump = false;
 
+	// pop all the bs from this level out of v
 	int aSize = v.size();
 	for (int i = 0; i < aSize; i++) {
 		if (v[i].remembers.size() >= 1)
@@ -114,7 +119,9 @@ static void putBackLosers(std::vector<number>& v, number& straggler) {
 		aIndex = getNextA(aIndex, jIndex, aSize, stopOnNextJump);
 	}
 
+	// place straggler at the end
 	if (straggler.val != -1) {
+		if (straggler.remembers.size() != 0)
 		v.insert(std::lower_bound(v.begin(), v.end(), straggler), straggler);
 	}
 }
