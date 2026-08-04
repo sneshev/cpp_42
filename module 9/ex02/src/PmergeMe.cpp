@@ -52,6 +52,54 @@ std::vector<number> PmergeMe::makePairsVec(std::vector<number> vec, number &stra
 	return (paired);
 }
 
+// static int getNextA(int aIndex, int& jIndex) {
+// 	--aIndex;
+// 	if (aIndex == Jacobsthal[jIndex - 1]) {
+// 		jIndex += 1;
+// 		aIndex = Jacobsthal[jIndex];
+// 	}
+// 	return (aIndex);
+// }
+
+// static void clampA(int& a, int& aSize, bool& stop) {
+// 			if (stop == true) {
+// 				aSize = -1;
+// 			}
+// 			else {
+// 				a = aSize;
+// 				stop = true;
+// 			}
+// }
+
+static void putBackLosers(std::vector<number>& v, number straggler) {
+	// int jIndex = 1;
+	int aIndex = 1;
+	// bool stopOnNextJump = false;
+
+	int aSize = v.size();
+	while (aIndex <= aSize) {
+		// get next a from main chain
+		number& currentA = v[aIndex*2 - 2];
+
+		// insert b to the main chain
+		if (currentA.remembers.size() >= 1) {
+			number b = currentA.remembers.back();
+			currentA.remembers.pop_back();
+			v.insert(std::lower_bound(v.begin(), v.end(), b), b);
+		}
+
+		// jump to next a respecting the sequence
+		aIndex++;
+		// aIndex = getNextA(aIndex, jIndex);
+		// if (aIndex > aSize) {
+		// 	clampA(aIndex, aSize, stopOnNextJump);
+		// }
+	}
+
+	if (straggler.val != -1) {
+		v.insert(std::lower_bound(v.begin(), v.end(), straggler), straggler);
+	}
+}
 
 std::vector<number> PmergeMe::sortVec(std::vector<number> vec) { 
 	if (vec.size() <= 2) {
@@ -60,43 +108,18 @@ std::vector<number> PmergeMe::sortVec(std::vector<number> vec) {
 		return vec;
 	}
 
+	// pair each 2 numbers (big remembers small)
 	number straggler; straggler.val = -1;
 	std::vector<number> pairs = makePairsVec(vec, straggler);
 
 	// recursion
 	std::vector<number> newVec = sortVec(pairs);
 
-	// putting back smallest number
-	number smallest = newVec.begin()->remembers.back();
-	newVec.begin()->remembers.pop_back();
-	newVec.insert(newVec.begin(), smallest);
+	// insert smaller numbers to the main chain
+	putBackLosers(newVec, straggler);
 
-	// putting back other losers in reverse order
-	std::vector<number>::iterator stop = newVec.begin(); ++stop;
-	std::vector<number>::iterator it = newVec.end(); --it;
-
-	int i = 0;				/* INSERTING A NUMBER INVALIDATES THE ITERATORS!!!!! */
-	while (it != stop) {		/* FIGURE THIS OUT AND IT SEEMS OK. EXAMPLE BAD INPUT ["23", "0", "2", "30", "4", "5", "1", "420"]*/
-		if (it->remembers.size() >= 1) {
-			number n = it->remembers.back();
-			it->remembers.pop_back();
-			newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), n), n);
-		}
-
-		stop = newVec.begin(); ++stop;
-		it = newVec.end(); --it;
-		for (int j = 0; j < i; j++) {
-			--it;
-		}
-		i++;
-	}
-
-	if (straggler.val != -1) {
-		newVec.insert(std::lower_bound(newVec.begin(), newVec.end(), straggler), straggler);
-	}
-
-
-	return newVec;
+	// return from this level 
+	return (newVec);
 }
 
 void PmergeMe::sortVec() {
