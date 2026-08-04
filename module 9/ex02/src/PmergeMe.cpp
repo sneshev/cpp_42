@@ -90,7 +90,9 @@ static int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
 	return (aIndex);
 }
 
-
+static void insertElement(std::vector<number>& v, number& n) {
+	v.insert(std::lower_bound(v.begin(), v.end(), n), n);
+}
 
 static void putBackLosers(std::vector<number>& v, number& straggler) {
 	int jIndex = 1;
@@ -112,7 +114,7 @@ static void putBackLosers(std::vector<number>& v, number& straggler) {
 		// insert b to the main chain
 		if (currentA.remembers.size() >= 1) {
 			number b = currentA.remembers.back();
-			v.insert(std::lower_bound(v.begin(), v.end(), b), b);
+			insertElement(v, b);
 		}
 
 		// jump to next a respecting the sequence
@@ -121,8 +123,7 @@ static void putBackLosers(std::vector<number>& v, number& straggler) {
 
 	// place straggler at the end
 	if (straggler.val != -1) {
-		if (straggler.remembers.size() != 0)
-		v.insert(std::lower_bound(v.begin(), v.end(), straggler), straggler);
+		insertElement(v, straggler);
 	}
 }
 
