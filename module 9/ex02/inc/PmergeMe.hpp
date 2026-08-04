@@ -94,7 +94,7 @@ const int Jacobsthal[] = { 0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731
 
 
 
-		x x x x
+		x x x x x x
 
 
 
