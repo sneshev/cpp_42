@@ -12,7 +12,14 @@ PmergeMe::PmergeMe(const PmergeMe& other) {
 PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
 	std::cout << BLUE << "PmergeMe Copy assignment operator called" << RESET << std::endl;
 	if (this != &other) {
+		/*
+			T
+			O
 
+			D
+			O
+		
+		*/
 	}
 	return (*this);
 }
@@ -22,9 +29,10 @@ PmergeMe::~PmergeMe() {
 }
 
 
-
 void PmergeMe::addNumber(unsigned int n) {
-	_vec.push_back(n);
+	number nb;
+	nb.val = n;
+	_vec.push_back(nb);
 }
 
 void PmergeMe::makePairs(std::vector<number>& vec, number &straggler) {
@@ -93,7 +101,7 @@ static void putBackLosers(std::vector<number>& v, number& straggler) {
 	}
 
 	while (aIndex <= aSize) {
-		// get next a from main chain
+		// get next a from tmp main chain
 		number& currentA = tmpVec[aIndex - 1];
 
 		// insert b to the main chain
@@ -136,19 +144,10 @@ void PmergeMe::sortVec() {
 	if (_vec.size() < 2)
 		throw std::runtime_error("sortVec: too few arguments");
 
-	std::vector<int>::iterator it;
+	_vec = sortVec(_vec);
 
-	std::vector<number> numberVector;
-	for (it = _vec.begin(); it != _vec.end(); ++it) {
-		number n;
-		n.val = *it;
-		numberVector.push_back(n);
-	}
-	std::vector<number> v = sortVec(numberVector);
-
-	for (size_t i = 0; i < v.size(); ++i) {
-		_vec[i] = v[i].val;
-		std::cout << _vec[i] << " ";
+	for (size_t i = 0; i < _vec.size(); ++i) {
+		std::cout << _vec[i].val << " ";
 	}
 	std::cout << std::endl;
 }
@@ -159,32 +158,6 @@ void PmergeMe::sortVec() {
 
 
 
-
-
-
-
-
-// void PmergeMe::sortDeq() {
-
-
-// }
-
-
-
-
-
-// void PmergeMe::sortVec(std::vector<int> vec) { 
-	// if (vec.size() < 2)
-		// return ;
-	// int straggler = -1;
-	// std::vector<std::pair<int, int>> pairs = makePairsVec(straggler);
-// 
-	// std::vector<std::pair<int, int>> bigFromPair;
-	// std::vector<std::pair<int, int>> smallFromPair;
-	// indexPairs(pairs, bigFromPair, smallFromPair);
-// 
-	// 
-// }
 
 
 

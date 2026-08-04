@@ -23,7 +23,7 @@ class number {
 
 class PmergeMe {
 	private:
-		std::vector<int> _vec;
+		std::vector<number> _vec;
 		// std::deque<int>  _deq;
 
 		// double _vecUs;
