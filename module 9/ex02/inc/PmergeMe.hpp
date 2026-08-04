@@ -47,6 +47,7 @@ class PmergeMe {
 		void makePairs(std::vector<number>& vec, number &straggler);
 		std::vector<number> sortVec(std::vector<number> vec);
 
+
 		// void sortVec(std::vector<int> vec) ;
 		// void sortDeq(std::deque<int> deq) ;
 };
@@ -93,7 +94,7 @@ const int Jacobsthal[] = { 0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731
 
 
 
-
+		x x x x
 
 
 

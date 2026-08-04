@@ -31,8 +31,6 @@ int main(int argc, char *argv[]) {
 		return(1);
 	}
 
-
-	p.sortVec();
 	// p.sortDeq();
 	// p.printResult();
 	return (0);
