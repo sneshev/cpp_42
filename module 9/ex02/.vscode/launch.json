@@ -9,7 +9,7 @@
 			"type": "lldb",
 			"request": "launch",
 			"program": "${workspaceRoot}/pmergeme",
-			"args": ["23", "0", "2", "30", "4", "5", "1", "420"],
+			"args": ["4", "3", "2", "4", "5", "1"],
 			"cwd": "${workspaceRoot}"
 		}
 	]

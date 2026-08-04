@@ -51,49 +51,59 @@ void PmergeMe::makePairs(std::vector<number>& vec, number &straggler) {
 	vec = paired;
 }
 
-// static int getNextA(int aIndex, int& jIndex) {
-// 	--aIndex;
-// 	if (aIndex == Jacobsthal[jIndex - 1]) {
-// 		jIndex += 1;
-// 		aIndex = Jacobsthal[jIndex];
-// 	}
-// 	return (aIndex);
-// }
 
-// static void clampA(int& a, int& aSize, bool& stop) {
-// 			if (stop == true) {
-// 				aSize = -1;
-// 			}
-// 			else {
-// 				a = aSize;
-// 				stop = true;
-// 			}
-// }
+static int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
+	// pick next number respecting the Jacobsthal sequence
+	--aIndex;
+	if (aIndex == Jacobsthal[jIndex - 1]) {
+		jIndex += 1;
+		aIndex = Jacobsthal[jIndex];
+	}
 
-static void putBackLosers(std::vector<number>& v, number straggler) {
-	// int jIndex = 1;
+	// clamp
+	if (aIndex > aSize) {
+		if (stopOnNextJump == true) {
+			aSize = -1;
+		} else {
+			aIndex = aSize;
+			stopOnNextJump = true;
+		}
+	}
+
+	// edge case end
+	if (aSize == Jacobsthal[jIndex - 1]) {
+		aSize = -1;
+	}
+
+	return (aIndex);
+}
+
+
+
+static void putBackLosers(std::vector<number>& v, number& straggler) {
+	int jIndex = 1;
 	int aIndex = 1;
-	// bool stopOnNextJump = false;
+	std::vector<number> tmpVec = v;
+	bool stopOnNextJump = false;
 
 	int aSize = v.size();
+	for (int i = 0; i < aSize; i++) {
+		if (v[i].remembers.size() >= 1)
+			v[i].remembers.pop_back();
+	}
+
 	while (aIndex <= aSize) {
 		// get next a from main chain
-		number& currentA = v[aIndex*2 - 2];
+		number& currentA = tmpVec[aIndex - 1];
 
 		// insert b to the main chain
 		if (currentA.remembers.size() >= 1) {
 			number b = currentA.remembers.back();
-			currentA.remembers.pop_back();
 			v.insert(std::lower_bound(v.begin(), v.end(), b), b);
 		}
 
-		aIndex++;
-
-		// // jump to next a respecting the sequence
-		// aIndex = getNextA(aIndex, jIndex);
-		// if (aIndex > aSize) {
-		// 	clampA(aIndex, aSize, stopOnNextJump);
-		// }
+		// jump to next a respecting the sequence
+		aIndex = getNextA(aIndex, jIndex, aSize, stopOnNextJump);
 	}
 
 	if (straggler.val != -1) {
@@ -113,13 +123,13 @@ std::vector<number> PmergeMe::sortVec(std::vector<number> vec) {
 	makePairs(vec, straggler);
 
 	// recursion
-	std::vector<number> newVec = sortVec(vec);
+	vec = sortVec(vec);
 
 	// insert smaller numbers to the main chain
-	putBackLosers(newVec, straggler);
+	putBackLosers(vec, straggler);
 
 	// return from this level 
-	return (newVec);
+	return (vec);
 }
 
 void PmergeMe::sortVec() {
