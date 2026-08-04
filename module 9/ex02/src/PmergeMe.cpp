@@ -27,7 +27,7 @@ void PmergeMe::addNumber(unsigned int n) {
 	_vec.push_back(n);
 }
 
-std::vector<number> PmergeMe::makePairsVec(std::vector<number> vec, number &straggler) {
+void PmergeMe::makePairs(std::vector<number>& vec, number &straggler) {
 	std::vector<number> paired;
 
 	for (std::vector<number>::iterator it = vec.begin(); it != vec.end(); ++it) {
@@ -48,8 +48,7 @@ std::vector<number> PmergeMe::makePairsVec(std::vector<number> vec, number &stra
 			}
 		}
 	}
-
-	return (paired);
+	vec = paired;
 }
 
 // static int getNextA(int aIndex, int& jIndex) {
@@ -111,10 +110,10 @@ std::vector<number> PmergeMe::sortVec(std::vector<number> vec) {
 
 	// pair each 2 numbers (big remembers small)
 	number straggler; straggler.val = -1;
-	std::vector<number> pairs = makePairsVec(vec, straggler);
+	makePairs(vec, straggler);
 
 	// recursion
-	std::vector<number> newVec = sortVec(pairs);
+	std::vector<number> newVec = sortVec(vec);
 
 	// insert smaller numbers to the main chain
 	putBackLosers(newVec, straggler);

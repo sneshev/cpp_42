@@ -44,7 +44,7 @@ class PmergeMe {
 
 	/* internal for sorting */
 	private:
-		std::vector<number> makePairsVec(std::vector<number> vec, number &straggler);
+		void makePairs(std::vector<number>& vec, number &straggler);
 		std::vector<number> sortVec(std::vector<number> vec);
 
 		// void sortVec(std::vector<int> vec) ;
