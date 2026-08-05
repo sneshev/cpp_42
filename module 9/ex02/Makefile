@@ -1,4 +1,4 @@
-NAME = pmergeme
+NAME = PmergeMe
 COM = c++ -g
 FLAGS = -Wall -Wextra -Werror 
 

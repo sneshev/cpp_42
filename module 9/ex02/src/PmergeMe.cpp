@@ -1,16 +1,16 @@
 #include "../inc/PmergeMe.hpp"
 
 PmergeMe::PmergeMe() {
-	std::cout << GREEN << "PmergeMe Default constructor called" << RESET << std::endl;
+	// std::cout << GREEN << "PmergeMe Default constructor called" << RESET << std::endl;
 }
 
 PmergeMe::PmergeMe(const PmergeMe& other) {
-	std::cout << BLUE << "PmergeMe Copy constructor called" << RESET << std::endl;
+	// std::cout << BLUE << "PmergeMe Copy constructor called" << RESET << std::endl;
 	*this = other;
 }
 
 PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
-	std::cout << BLUE << "PmergeMe Copy assignment operator called" << RESET << std::endl;
+	// std::cout << BLUE << "PmergeMe Copy assignment operator called" << RESET << std::endl;
 	if (this != &other) {
 		/*
 			T
@@ -25,7 +25,7 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
 }
 
 PmergeMe::~PmergeMe() {
-	std::cout << RED << "PmergeMe Destructor called" << RESET << std::endl;
+	// std::cout << RED << "PmergeMe Destructor called" << RESET << std::endl;
 }
 
 
@@ -90,12 +90,10 @@ static int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
 	return (aIndex);
 }
 
-// v.insert(std::lower_bound(v.begin(), v.end(), n), n);
+// size will always be even
 static void insertElement(std::vector<number>& v, number& n, size_t size) {
-	if (size == 1) {
-		if      (v[0].val > n.val)  v.insert(v.begin(), n);
-		else if (v[0].val <= n.val) v.insert(v.begin() + 1, n);
-
+	if (size == 0) {
+		v.insert(v.begin(), n);
 		return ;
 	}
 
@@ -126,14 +124,14 @@ static void putBackLosers(std::vector<number>& v, number& straggler) {
 			v[i].remembers.pop_back();
 	}
 
-	while (aIndex <= aSize) {
+	for (size_t i = 0; aIndex <= aSize; ++i) {
 		// get next a from tmp main chain
 		number& currentA = tmpVec[aIndex - 1];
 
 		// insert b to the main chain
 		if (currentA.remembers.size() >= 1) {
 			number b = currentA.remembers.back();
-			insertElement(v, b, v.size());
+			insertElement(v, b, ((aIndex-1) + i));
 		}
 
 		// jump to next a respecting the sequence
@@ -176,7 +174,7 @@ void PmergeMe::sortVec() {
 	for (size_t i = 0; i < _vec.size(); ++i) {
 		std::cout << _vec[i].val << " ";
 	}
-	std::cout << std::endl;
+	// std::cout << std::endl;
 }
 
 
