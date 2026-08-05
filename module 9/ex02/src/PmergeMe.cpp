@@ -145,7 +145,7 @@ static void putBackLosers(std::vector<number>& v, number& straggler) {
 }
 
 std::vector<number> PmergeMe::sortVec(std::vector<number> vec) { 
-	if (vec.size() <= 2) {
+	if (vec.size() <= 2) { // start sorted main chain
 		if (vec.begin()->val > vec.rbegin()->val)
 			std::swap(*vec.begin(), *vec.rbegin());
 		return vec;
@@ -155,7 +155,7 @@ std::vector<number> PmergeMe::sortVec(std::vector<number> vec) {
 	number straggler; straggler.val = -1;
 	makePairs(vec, straggler);
 
-	// recursion
+	// recursion 
 	vec = sortVec(vec);
 
 	// insert smaller numbers to the main chain
