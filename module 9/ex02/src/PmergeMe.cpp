@@ -35,36 +35,7 @@ void PmergeMe::addNumber(unsigned int n) {
 	_vec.push_back(nb);
 }
 
-void PmergeMe::makePairs(std::vector<number>& vec, number &straggler) {
-	std::vector<number> paired;
-
-	for (std::vector<number>::iterator it = vec.begin(); it != vec.end(); ++it) {
-
-		// pick the 2 neighboring numbers (or put odd one in straggler)
-		number nb = *it;
-		++it;
-		if (it == vec.end()) {
-			straggler = nb;
-			break;
-		}
-
-		// push number into bigger number's remember vector
-		else {
-			if (nb.val > (*it).val) {
-				nb.remembers.push_back(*it);
-				paired.push_back(nb);
-			}
-			else {
-				(*it).remembers.push_back(nb);
-				paired.push_back(*it);
-			}
-		}
-	}
-	vec = paired;
-}
-
-
-static int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
+int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
 	// pick next number respecting the Jacobsthal sequence
 	--aIndex;
 	if (aIndex == Jacobsthal[jIndex - 1]) {
@@ -90,86 +61,16 @@ static int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
 	return (aIndex);
 }
 
-// size will always be even
-static void insertElement(std::vector<number>& v, number& n, size_t size) {
-	if (size == 0) {
-		v.insert(v.begin(), n);
-		return ;
-	}
 
-	size_t low = 0, high = size;
-	while (low < high) {
-		size_t mid = low + (high-low)/2;
 
-		if (v[mid].val > n.val)
-			high = mid;
-		else {
-			low = mid + 1;
-		}
-	}
 
-	v.insert(v.begin() + low, n);
-}
 
-static void putBackLosers(std::vector<number>& v, number& straggler) {
-	int jIndex = 1;
-	int aIndex = 1;
-	std::vector<number> tmpVec = v;
-	bool stopOnNextJump = false;
-
-	// pop all the bs from this level out of v
-	int aSize = v.size();
-	for (int i = 0; i < aSize; i++) {
-		if (v[i].remembers.size() >= 1)
-			v[i].remembers.pop_back();
-	}
-
-	for (size_t i = 0; aIndex <= aSize; ++i) {
-		// get next a from tmp main chain
-		number& currentA = tmpVec[aIndex - 1];
-
-		// insert b to the main chain
-		if (currentA.remembers.size() >= 1) {
-			number b = currentA.remembers.back();
-			insertElement(v, b, ((aIndex-1) + i));
-		}
-
-		// jump to next a respecting the sequence
-		aIndex = getNextA(aIndex, jIndex, aSize, stopOnNextJump);
-	}
-
-	// place straggler at the end
-	if (straggler.val != -1) {
-		insertElement(v, straggler, v.size());
-	}
-}
-
-std::vector<number> PmergeMe::sortVec(std::vector<number> vec) { 
-	if (vec.size() <= 2) { // start sorted main chain
-		if (vec.begin()->val > vec.rbegin()->val)
-			std::swap(*vec.begin(), *vec.rbegin());
-		return vec;
-	}
-
-	// pair each 2 numbers (big remembers small)
-	number straggler; straggler.val = -1;
-	makePairs(vec, straggler);
-
-	// recursion 
-	vec = sortVec(vec);
-
-	// insert smaller numbers to the main chain
-	putBackLosers(vec, straggler);
-
-	// return from this level 
-	return (vec);
-}
 
 void PmergeMe::sortVec() {
 	if (_vec.size() < 2)
 		throw std::runtime_error("sortVec: too few arguments");
 
-	_vec = sortVec(_vec);
+	_vec = mergeInsertionSort(_vec);
 
 	for (size_t i = 0; i < _vec.size(); ++i) {
 		std::cout << _vec[i].val << " ";

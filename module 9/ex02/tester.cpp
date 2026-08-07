@@ -5,7 +5,7 @@
 #include <array>
 #include <cstdio>
 
-#define EXECUTABLE "./pmergeme"
+#define EXECUTABLE "./PmergeMe"
 
 std::string runPmergeMe(const std::string& input) {
 	std::string execute(EXECUTABLE);
