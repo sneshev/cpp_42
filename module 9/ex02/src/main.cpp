@@ -1,4 +1,5 @@
 #include "../inc/PmergeMe.hpp"
+#include <random>
 
 int parseNumber(std::string s) {
 	size_t pos = 0;
@@ -12,26 +13,51 @@ int parseNumber(std::string s) {
 	return (nb);
 }
 
+std::random_device rd;
+std::mt19937 gen(rd());
+int randomNumber() {
+	std::uniform_int_distribution<int> dist(0, INT32_MAX);
+	return dist(gen);
+}
+
 int main(int argc, char *argv[]) {
-	if (argc < 3) {
+	if (argc < 2) {
 		std::cout << "Error: " << "too few arguments" << std::endl;
 		return (1);
 	}
+	else if (argc == 2) {
+		PmergeMe p;
+		try {
+			int size = parseNumber(std::string(argv[1]));
 
-	PmergeMe p;
-	try {
-		for (int i = 1; argv[i]; i++) {
-			int nb = parseNumber(std::string(argv[i]));
-			p.addNumber(nb);
+			for (int i = 0; i < size; i++) {
+				p.addNumber(randomNumber());
+			}
+			p.sortVec();
+			p.sortDeq();
+			p.printResult();
 		}
-		p.sortVec();
+		catch (const std::exception& e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			return(1);
+		}
 	}
-	catch (const std::exception& e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		return(1);
+	else {
+		PmergeMe p;
+		try {
+			for (int i = 1; argv[i]; i++) {
+				int nb = parseNumber(std::string(argv[i]));
+				p.addNumber(nb);
+			}
+			p.sortVec();
+			p.sortDeq();
+			p.printResult();
+		}
+		catch (const std::exception& e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			return(1);
+		}
 	}
 
-	// p.sortDeq();
-	// p.printResult();
 	return (0);
 }

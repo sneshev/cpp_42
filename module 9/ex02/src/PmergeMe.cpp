@@ -12,14 +12,11 @@ PmergeMe::PmergeMe(const PmergeMe& other) {
 PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
 	// std::cout << BLUE << "PmergeMe Copy assignment operator called" << RESET << std::endl;
 	if (this != &other) {
-		/*
-			T
-			O
-
-			D
-			O
-		
-		*/
+		_original = other._original;
+		_vec = other._vec;
+		_deq = other._deq;
+		_vecUs = other._vecUs;
+		_deqUs = other._deqUs;
 	}
 	return (*this);
 }
@@ -33,6 +30,8 @@ void PmergeMe::addNumber(unsigned int n) {
 	number nb;
 	nb.val = n;
 	_vec.push_back(nb);
+	_deq.push_back(nb);
+	_original.push_back(n);
 }
 
 int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
@@ -62,27 +61,67 @@ int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump) {
 }
 
 
-
-
-
-
 void PmergeMe::sortVec() {
 	if (_vec.size() < 2)
 		throw std::runtime_error("sortVec: too few arguments");
 
+	tp start = std::chrono::steady_clock::now();
+
 	_vec = mergeInsertionSort(_vec);
 
-	for (size_t i = 0; i < _vec.size(); ++i) {
-		std::cout << _vec[i].val << " ";
+	tp end = std::chrono::steady_clock::now();
+	_vecUs = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+}
+
+void PmergeMe::sortDeq() {
+	if (_deq.size() < 2)
+		throw std::runtime_error("sortDeq: too few arguments");
+
+	tp start = std::chrono::steady_clock::now();
+
+	_deq = mergeInsertionSort(_deq);
+
+	tp end = std::chrono::steady_clock::now();
+	_deqUs = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+}
+
+
+static void printNumbers(std::vector<unsigned int> numbers) {
+	for (size_t i = 0; i < numbers.size(); ++i) {
+		std::cout << numbers[i] << " ";
+		if (i == 5 && PRINTNUMBERS_CUT) {
+			std::cout << "[...]";
+			return ;
+		}
 	}
-	// std::cout << std::endl;
+}
+
+static void printNumbers(std::vector<number> numbers) {
+	for (size_t i = 0; i < numbers.size(); ++i) {
+		std::cout << numbers[i].val << " ";
+		if (i == 5 && PRINTNUMBERS_CUT) {
+			std::cout << "[...]";
+			return ;
+		}
+	}
 }
 
 
 
+/*
+Before: 3 5 9 7 4
+After: 3 4 5 7 9
+Time to process a range of 5 elements with std::[..] : 0.00031 us
+Time to process a range of 5 elements with std::[..] : 0.00014 us*/
+void PmergeMe::printResult() const {
+	std::cout << "Before: "; printNumbers(_original); std::cout << std::endl;
+	std::cout << "After: "; printNumbers(_vec); std::cout << std::endl;
+	std::cout << "Time to process a range of " << _original.size()
+		<< " elements with std::vector : " << _vecUs << "us" << std::endl;
+	std::cout << "Time to process a range of " << _original.size()
+		<< " elements with std::deque : " << _deqUs << "us" << std::endl;
 
-
-
+}
 
 
 

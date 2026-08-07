@@ -1,6 +1,6 @@
 NAME = PmergeMe
-COM = c++ -g
-FLAGS = -Wall -Wextra -Werror 
+COM = c++ 
+FLAGS = -Wall -Wextra -Werror  -O2
 
 SRC_DIR = src
 OBJ_DIR = obj

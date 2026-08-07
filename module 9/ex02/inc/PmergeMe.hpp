@@ -5,32 +5,34 @@
 #include <vector>
 #include <deque>
 #include <utility>
+#include <chrono>
 
 #define RED "\033[31m"
 #define GREEN "\033[32m"
 #define BLUE "\033[34m"
 #define RESET "\033[0m"
 
+#define tp std::chrono::steady_clock::time_point
+
+#define PRINTNUMBERS_CUT 1
+// #define PRINTNUMBERS_CUT 0
+
 // follows the formula [     J[i] = J[i-1] + (2 * J[i-2])    ] 
 const int Jacobsthal[] = { 0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203, 5592405, 11184811, 22369621, 44739243, 89478485, 178956971, 357913941, 715827883, 1431655765, 2147483647/*intmax for safety*/};
 
-class number {
-	public:
-		int val;
-		std::vector<number> remembers;
-
-	bool operator<(const number& other) const {
-		return val < other.val;
-    }
+struct number {
+	int val;
+	std::vector<number> remembers;
 };
 
 class PmergeMe {
 	private:
+		std::vector<unsigned int> _original;
 		std::vector<number> _vec;
-		// std::deque<int>  _deq;
+		std::deque<number>  _deq;
 
-		// double _vecUs;
-		// double _deqUs;
+		double _vecUs;
+		double _deqUs;
 
 	public:
 		PmergeMe();
@@ -41,8 +43,8 @@ class PmergeMe {
 
 		void addNumber(unsigned int n);
 		void sortVec() ;
-		// void sortDeq() ;
-		// void printResult() const ;
+		void sortDeq() ;
+		void printResult() const ;
 
 
 };
