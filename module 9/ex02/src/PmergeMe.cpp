@@ -90,21 +90,21 @@ void PmergeMe::sortDeq() {
 
 static void printNumbers(std::vector<unsigned int> numbers) {
 	for (size_t i = 0; i < numbers.size(); ++i) {
-		std::cout << numbers[i] << " ";
-		if (i == 5 && PRINTNUMBERS_CUT) {
+		if (i == 6 && PRINTNUMBERS_CUT) {
 			std::cout << "[...]";
 			return ;
 		}
+		std::cout << numbers[i] << " ";
 	}
 }
 
 static void printNumbers(std::vector<number> numbers) {
 	for (size_t i = 0; i < numbers.size(); ++i) {
-		std::cout << numbers[i].val << " ";
-		if (i == 5 && PRINTNUMBERS_CUT) {
+		if (i == 6 && PRINTNUMBERS_CUT) {
 			std::cout << "[...]";
 			return ;
 		}
+		std::cout << numbers[i].val << " ";
 	}
 }
 
