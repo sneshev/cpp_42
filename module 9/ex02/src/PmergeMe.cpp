@@ -1,5 +1,7 @@
 #include "../inc/PmergeMe.hpp"
 
+size_t comparisons = 0;
+
 PmergeMe::PmergeMe() {
 	// std::cout << GREEN << "PmergeMe Default constructor called" << RESET << std::endl;
 }
@@ -120,7 +122,9 @@ void PmergeMe::printResult() const {
 		<< " elements with std::vector : " << _vecUs << "us" << std::endl;
 	std::cout << "Time to process a range of " << _original.size()
 		<< " elements with std::deque : " << _deqUs << "us" << std::endl;
-
+	if (PRINTNUMBERS_COMPARISONS == true) {
+		std::cout << "Number of comparisons: " << comparisons << std::endl;
+	}
 }
 
 

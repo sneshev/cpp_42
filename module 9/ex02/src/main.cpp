@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 				p.addNumber(nb);
 			}
 			p.sortVec();
-			p.sortDeq();
+			// p.sortDeq();
 			p.printResult();
 		}
 		catch (const std::exception& e) {

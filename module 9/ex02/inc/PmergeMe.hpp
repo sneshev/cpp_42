@@ -16,9 +16,14 @@
 
 #define PRINTNUMBERS_CUT 1
 // #define PRINTNUMBERS_CUT 0
+#define PRINTNUMBERS_COMPARISONS 1
+// #define PRINTNUMBERS_comparisons 0
 
 // follows the formula [     J[i] = J[i-1] + (2 * J[i-2])    ] 
 const int Jacobsthal[] = { 0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203, 5592405, 11184811, 22369621, 44739243, 89478485, 178956971, 357913941, 715827883, 1431655765, 2147483647/*intmax for safety*/};
+
+
+extern size_t comparisons;
 
 struct number {
 	int val;
@@ -50,7 +55,7 @@ class PmergeMe {
 };
 
 template <typename Container>
-void makePairs(Container& vec, number &straggler) {
+void makePairs(Container& vec) {
 	Container paired;
 
 	for (typename Container::iterator it = vec.begin(); it != vec.end(); ++it) {
@@ -58,22 +63,17 @@ void makePairs(Container& vec, number &straggler) {
 		// pick the 2 neighboring numbers (or put odd one in straggler)
 		number nb = *it;
 		++it;
-		if (it == vec.end()) {
-			straggler = nb;
-			break;
-		}
 
 		// push number into bigger number's remember vector
-		else {
-			if (nb.val > (*it).val) {
-				nb.remembers.push_back(*it);
-				paired.push_back(nb);
-			}
-			else {
-				(*it).remembers.push_back(nb);
-				paired.push_back(*it);
-			}
+		if (nb.val > (*it).val) {
+			nb.remembers.push_back(*it);
+			paired.push_back(nb);
 		}
+		else {
+			(*it).remembers.push_back(nb);
+			paired.push_back(*it);
+		}
+		++comparisons;
 	}
 	vec = paired;
 }
@@ -90,6 +90,7 @@ static void insertElement(Container& v, number& n, size_t size) {
 	while (low < high) {
 		size_t mid = low + (high-low)/2;
 
+		++comparisons;
 		if (v[mid].val > n.val)
 			high = mid;
 		else {
@@ -116,6 +117,15 @@ static void putBackLosers(Container& v, number& straggler) {
 			v[i].remembers.pop_back();
 	}
 
+	// place straggler at end of b chain
+	if (straggler.val != -1) {
+		number stragglerParent; stragglerParent.val = -1;
+		stragglerParent.remembers.push_back(straggler);
+		tmpVec.push_back(stragglerParent);
+		aSize += 1;
+	}
+
+
 	for (size_t i = 0; aIndex <= aSize; ++i) {
 		// get next a from tmp main chain
 		number& currentA = tmpVec[aIndex - 1];
@@ -130,24 +140,27 @@ static void putBackLosers(Container& v, number& straggler) {
 		aIndex = getNextA(aIndex, jIndex, aSize, stopOnNextJump);
 	}
 
-	// place straggler at the end
-	if (straggler.val != -1) {
-		insertElement(v, straggler, v.size());
-	}
 }
 
 
 template <typename Container>
 Container mergeInsertionSort(Container vec) { 
 	if (vec.size() <= 2) { // start sorted main chain
-		if (vec.begin()->val > vec.rbegin()->val)
-			std::swap(*vec.begin(), *vec.rbegin());
+		if (vec.begin()->val > vec.rbegin()->val) {
+			std::swap(*vec.begin(), *vec.rbegin()); ++comparisons;
+		}
 		return vec;
 	}
 
-	// pair each 2 numbers (big remembers small)
 	number straggler; straggler.val = -1;
-	makePairs(vec, straggler);
+	if (vec.size() % 2 == 1) {
+		straggler = vec.back(); vec.pop_back();
+	}
+
+	// pair each 2 numbers
+	if (vec.size() > 2) {
+		makePairs(vec);
+	}
 
 	// recursion 
 	vec = mergeInsertionSort(vec);
