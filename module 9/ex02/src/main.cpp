@@ -61,3 +61,37 @@ int main(int argc, char *argv[]) {
 
 	return (0);
 }
+
+
+/*
+
+
+
+	a1 
+	b1 b2
+
+	b1 a1 
+	      b2    
+		      size == 2
+
+
+
+
+	a1 a2
+	b1 b2 b3
+
+	b1 a1 a2
+	      b2 b3
+					size == 3
+
+	a1 a2 a3 a4
+	b1 b2 b3 b4 b5
+
+	b2 b3 b1 a1 a2 a3 a4
+	                  b4 b5    
+					  		  size == 7 
+
+
+
+
+*/

@@ -127,7 +127,8 @@ static void putBackLosers(Container& v, number& straggler) {
 	}
 
 
-	for (size_t i = 0; aIndex <= aSize; ++i) {
+	size_t i = 0;
+	while (aIndex <= aSize) {
 		// get next a from tmp main chain
 		number& currentA = tmpVec[aIndex - 1];
 
@@ -135,14 +136,13 @@ static void putBackLosers(Container& v, number& straggler) {
 		if (currentA.remembers.size() >= 1) {
 			number b = currentA.remembers.back();
 			size_t size = (aIndex-1) + i;
-			if (currentA.val == -1) { --size; } // straggler
 			insertElement(v, b, size);
+			++i;
 		}
 
 		// jump to next a respecting the sequence
 		aIndex = getNextA(aIndex, jIndex, aSize, stopOnNextJump);
 	}
-
 }
 
 
