@@ -103,6 +103,7 @@ static void insertElement(Container& v, number& n, size_t size) {
 
 
 int getNextA(int aIndex, int& jIndex, int &aSize, bool& stopOnNextJump);
+
 template <typename Container>
 static void putBackLosers(Container& v, number& straggler) {
 	int jIndex = 1;
@@ -133,7 +134,9 @@ static void putBackLosers(Container& v, number& straggler) {
 		// insert b to the main chain
 		if (currentA.remembers.size() >= 1) {
 			number b = currentA.remembers.back();
-			insertElement(v, b, ((aIndex-1) + i));
+			size_t size = (aIndex-1) + i;
+			if (currentA.val == -1) { --size; } // straggler
+			insertElement(v, b, size);
 		}
 
 		// jump to next a respecting the sequence
@@ -147,8 +150,9 @@ template <typename Container>
 Container mergeInsertionSort(Container vec) { 
 	if (vec.size() <= 2) { // start sorted main chain
 		if (vec.begin()->val > vec.rbegin()->val) {
-			std::swap(*vec.begin(), *vec.rbegin()); ++comparisons;
+			std::swap(*vec.begin(), *vec.rbegin());
 		}
+		++comparisons;
 		return vec;
 	}
 
