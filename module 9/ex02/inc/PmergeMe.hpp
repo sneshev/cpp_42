@@ -14,7 +14,7 @@
 
 #define tp std::chrono::steady_clock::time_point
 
-#define PRINTNUMBERS_CUT 1
+#define PRINTNUMBERS_CUT 0
 // #define PRINTNUMBERS_CUT 0
 #define PRINTNUMBERS_COMPARISONS 1
 // #define PRINTNUMBERS_comparisons 0

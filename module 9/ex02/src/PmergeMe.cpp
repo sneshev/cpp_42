@@ -88,15 +88,15 @@ void PmergeMe::sortDeq() {
 }
 
 
-static void printNumbers(std::vector<unsigned int> numbers) {
-	for (size_t i = 0; i < numbers.size(); ++i) {
-		if (i == 6 && PRINTNUMBERS_CUT) {
-			std::cout << "[...]";
-			return ;
-		}
-		std::cout << numbers[i] << " ";
-	}
-}
+// static void printNumbers(std::vector<unsigned int> numbers) {
+// 	for (size_t i = 0; i < numbers.size(); ++i) {
+// 		if (i == 6 && PRINTNUMBERS_CUT) {
+// 			std::cout << "[...]";
+// 			return ;
+// 		}
+// 		std::cout << numbers[i] << " ";
+// 	}
+// }
 
 static void printNumbers(std::vector<number> numbers) {
 	for (size_t i = 0; i < numbers.size(); ++i) {
@@ -116,15 +116,18 @@ After: 3 4 5 7 9
 Time to process a range of 5 elements with std::[..] : 0.00031 us
 Time to process a range of 5 elements with std::[..] : 0.00014 us*/
 void PmergeMe::printResult() const {
-	std::cout << "Before: "; printNumbers(_original); std::cout << std::endl;
-	std::cout << "After: "; printNumbers(_vec); std::cout << std::endl;
-	std::cout << "Time to process a range of " << _original.size()
-		<< " elements with std::vector : " << _vecUs << "us" << std::endl;
-	std::cout << "Time to process a range of " << _original.size()
-		<< " elements with std::deque : " << _deqUs << "us" << std::endl;
-	if (PRINTNUMBERS_COMPARISONS == true) {
-		std::cout << "Number of comparisons: " << comparisons << std::endl;
-	}
+	// std::cout << "Before: "; printNumbers(_original); std::cout << std::endl;
+	// std::cout << "After: "; printNumbers(_vec); std::cout << std::endl;
+	// std::cout << "Time to process a range of " << _original.size()
+	// 	<< " elements with std::vector : " << _vecUs << "us" << std::endl;
+	// std::cout << "Time to process a range of " << _original.size()
+	// 	<< " elements with std::deque : " << _deqUs << "us" << std::endl;
+	// if (PRINTNUMBERS_COMPARISONS == true) {
+	// 	std::cout << "Number of comparisons: " << comparisons << std::endl;
+	// }
+
+	std::cout << comparisons << "\n";
+	printNumbers(_vec);
 }
 
 

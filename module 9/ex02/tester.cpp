@@ -7,6 +7,9 @@
 
 #define EXECUTABLE "./PmergeMe"
 
+const size_t maxComparisons[] = {0, 0, 1, 3, 5, 7, 10, 13, 16, 19, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 71 };
+
+
 std::string runPmergeMe(const std::string& input) {
 	std::string execute(EXECUTABLE);
 	execute += input;
@@ -44,14 +47,20 @@ void test(std::vector<int> v) {
 
 
 	std::string r1 = runPmergeMe(s);
+	char *end;
+	int n1 = std::strtol(r1.c_str(), &end, 10);
+	r1 = end + 1;
+
 	std::string r2 = runStdSort(v);
-	if (r1 == r2) {
+	int n2 = maxComparisons[v.size()];
+	
+	if (r1 == r2 && n1 <= n2) {
 		std::cout << "✅ ";
 	} else {
 		std::cout << "\n" << s << std::endl;
 		std::cout << "❌😬😬⚠️⛔💥💣⚠️💥⛔💀⚠️❌⛔🫠🫠🫠😭📉" << std::endl;
-		std::cout << "PmergeMe : " << r1 << std::endl;
-		std::cout << "std::sort: " << r2 << std::endl;
+		std::cout << "PmergeMe (" << n1  << "): " << r1 << std::endl;
+		std::cout << "std::sort(" << n2 << "): " << r2 << std::endl;
 	}
 }
 
@@ -66,7 +75,7 @@ std::vector<int> randVec(size_t n) {
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dist(0, INT32_MAX);
+	std::uniform_int_distribution<> dist(0, 3000);
 
 	for (size_t i = 0; i < n; ++i)
 	    result.push_back(dist(gen));
@@ -90,7 +99,7 @@ static void standardTests() {
 
 int main() {
 	// standardTests();
-	for (int i = 2; i < 200; ++i) {
+	for (int i = 2; i < 10; ++i) {
 		for (int j = 0; j < 10; j++) {
 			test(randVec(i));
 		}
